@@ -1,8 +1,9 @@
 {
-  "version": 2,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/favicon.ico", "destination": "/background.png" },
-    { "source": "/((?!api-|style\\.css|script\\.js|background\\.png).*).*", "destination": "/index.html" }
+    {
+      "source": "/((?!res/|background\\.png|api/).*)",
+      "destination": "/index.html"
+    }
   ]
 }
