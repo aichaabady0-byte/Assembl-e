@@ -7,8 +7,14 @@
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: #adaaaa;
-    background: linear-gradient(0deg, rgba(173, 170, 170, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    
+    /* Configuration de l'image de fond (située à la racine) */
+    background-image: url('background.png'); 
+    background-size: cover;          /* L'image prend tout l'écran sans déformation */
+    background-position: center;     /* Centre l'image */
+    background-repeat: no-repeat;    /* Évite la répétition */
+    background-attachment: fixed;    /* Bloque l'arrière-plan au défilement */
+    
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -26,14 +32,6 @@ main {
     padding: 20px;
 }
 
-/* Style du Logo */
-#logo img {
-    max-width: 200px;
-    height: auto;
-    margin-bottom: 35px;
-    display: block;
-}
-
 /* Conteneur principal (La "Bubble") */
 .bubble {
     background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 100%);
@@ -41,11 +39,11 @@ main {
     border-radius: 8px;
     padding: 25px 30px;
     width: 100%;
-    /* Ombre portée douce */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    /* Ombre portée pour détacher la boîte du fond */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
-/* Titre principal "Under Maintenance" */
+/* Titre principal */
 .bubble h1 {
     font-size: 24px;
     font-weight: bold;
@@ -61,7 +59,7 @@ main {
     line-height: 1.4;
 }
 
-/* Masquer le footer car absent de l'image originale */
+/* Masquer le footer */
 footer {
     display: none;
 }
