@@ -8,12 +8,12 @@
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     
-    /* Configuration de l'image de fond (située à la racine) */
+    /* Orthographe exacte de votre fichier GitHub */
     background-image: url('Capture d'écran 2026-06-07 190350.png'); 
-    background-size: cover;          /* L'image prend tout l'écran sans déformation */
-    background-position: center;     /* Centre l'image */
-    background-repeat: no-repeat;    /* Évite la répétition */
-    background-attachment: fixed;    /* Bloque l'arrière-plan au défilement */
+    background-size: cover;          
+    background-position: center;     
+    background-repeat: no-repeat;    
+    background-attachment: fixed;    
     
     height: 100vh;
     display: flex;
@@ -32,18 +32,16 @@ main {
     padding: 20px;
 }
 
-/* Conteneur principal (La "Bubble") */
+/* La boîte centrale */
 .bubble {
     background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 100%);
     border: 1px solid #d1d1d1;
     border-radius: 8px;
     padding: 25px 30px;
     width: 100%;
-    /* Ombre portée pour détacher la boîte du fond */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
-/* Titre principal */
 .bubble h1 {
     font-size: 24px;
     font-weight: bold;
@@ -51,7 +49,6 @@ main {
     margin-bottom: 15px;
 }
 
-/* Sous-titre / Texte explicatif */
 .bubble h2 {
     font-size: 15px;
     font-weight: normal;
@@ -59,7 +56,6 @@ main {
     line-height: 1.4;
 }
 
-/* Masquer le footer */
 footer {
     display: none;
 }
