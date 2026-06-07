@@ -8,12 +8,11 @@
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     
-    /* Orthographe exacte de votre fichier GitHub */
-    background-image: url('Capture d'écran 2026-06-07 190350.png'); 
-    background-size: cover;          
-    background-position: center;     
-    background-repeat: no-repeat;    
-    background-attachment: fixed;    
+    /* Paramètres de l'image de fond */
+    background-size: cover;          /* Force l'image à couvrir tout l'écran */
+    background-position: center;     /* Centre l'image horizontalement et verticalement */
+    background-repeat: no-repeat;    /* Évite la répétition */
+    background-attachment: fixed;    /* Bloque le fond au défilement */
     
     height: 100vh;
     display: flex;
@@ -32,7 +31,7 @@ main {
     padding: 20px;
 }
 
-/* La boîte centrale */
+/* La boîte centrale (La "Bubble") */
 .bubble {
     background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 100%);
     border: 1px solid #d1d1d1;
@@ -56,6 +55,7 @@ main {
     line-height: 1.4;
 }
 
+/* Masquer le footer pour coller à la maquette d'origine */
 footer {
     display: none;
 }
