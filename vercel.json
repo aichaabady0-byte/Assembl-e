@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/((?!res/|logo\\.png).*|index\\.html)",
+      "destination": "/index.html"
+    }
+  ]
+}
