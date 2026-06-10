@@ -1,31 +1,36 @@
-/* Réinitialisation */
+/* ==========================================================================
+   RESET & CONFIGURATION GLOBALE
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     height: 100vh;
+    height: 100dvh; /* Gère les barres de navigation sur mobile (iOS/Android) */
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: #000;
+    background-color: #0b0f19;
 }
 
-/* =========================================
-   SYSTÈME DE PUBLICITÉS EN ARRIÈRE-PLAN
-   ========================================= */
+/* ==========================================================================
+   ARRIÈRE-PLAN : CARROUSEL DE PUBS EN PLEIN ÉCRAN
+   ========================================================================== */
 .fullscreen-ads {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Reste bien derrière le menu principal */
+    z-index: 1;
 }
 
 .ad-slide {
@@ -38,118 +43,230 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0;
-    transition: opacity 1s ease-in-out; /* Effet de fondu lors du défilement */
+    visibility: hidden;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
     display: flex;
-    align-items: flex-end; /* Aligne le texte en bas à gauche de l'écran */
-    padding: 40px;
+    align-items: flex-end; 
+    padding: 2rem;
 }
 
-/* Devient visible quand elle est active */
+/* Dégradé sombre par-dessus l'image pour garantir la lisibilité du texte */
+.ad-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(11, 15, 25, 0.95) 0%, rgba(11, 15, 25, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+    z-index: 2;
+}
+
 .ad-slide.active {
     opacity: 1;
+    visibility: visible;
 }
 
-/* Contenu textuel de la pub */
+/* Contenu de la publicité (Titre, Desc...) */
 .ad-content {
-    max-width: 450px;
-    color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-    animation: fadeInUp 0.8s ease forwards;
+    position: relative;
+    z-index: 3; /* Passe au-dessus du filtre sombre */
+    max-width: 500px;
+    margin-bottom: 4rem; /* Laisse de la place pour les points en dessous sur mobile */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s;
+}
+
+.ad-slide.active .ad-content {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .ad-tag {
-    background: #ff4757;
-    color: white;
-    font-size: 11px;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: #ffffff;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 4px;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 50px;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 0.75rem;
     letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Changement de couleur dynamique pour le tag événement */
+.ad-slide:nth-child(3) .ad-tag {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
 }
 
 .ad-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
 }
 
 .ad-desc {
-    font-size: 14px;
-    color: #e0e0e0;
-    line-height: 1.4;
+    font-size: 0.95rem;
+    color: #94a3b8;
+    line-height: 1.5;
 }
 
-/* LES POINTS DE DÉFILEMENT DE LA PUB */
+/* INDICATION DE DÉFILEMENT (LES POINTS) */
 .ad-dots {
     position: absolute;
-    bottom: 40px;
-    right: 40px; /* Positionnés en bas à droite */
+    bottom: 2.5rem;
+    right: 2rem;
     display: flex;
-    gap: 10px;
+    gap: 0.75rem;
     z-index: 10;
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
-    background-color: rgba(255, 255, 255, 0.4);
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.25);
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dot.active {
-    background-color: #ffffff;
-    transform: scale(1.3); /* Le point de la pub active grossit un peu */
-    box-shadow: 0 0 8px rgba(255,255,255,0.8);
+    background-color: #3b82f6;
+    width: 28px; /* Effet de pilule moderne pour le point actif */
+    border-radius: 50px;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
 }
 
-/* =========================================
-   BOÎTE DE MAINTENANCE PRINCIPALE
-   ========================================= */
+/* ==========================================================================
+   BOÎTE DE MAINTENANCE (UI DESIGN STYLE)
+   ========================================================================== */
 main {
     position: relative;
-    z-index: 5; /* Passe par-dessus l'arrière-plan publicitaire */
+    z-index: 5;
     width: 100%;
-    max-width: 500px;
-    padding: 20px;
+    max-width: 460px;
+    padding: 1.5rem;
 }
 
+/* Style Glassmorphism transparent et haut de gamme */
 .bubble {
-    background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 100%);
-    border: 1px solid #d1d1d1;
-    border-radius: 8px;
-    padding: 30px 35px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
     width: 100%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: mainAppear 0.8s ease-out;
+}
+
+/* Logo ou icône animée de maintenance */
+.bubble::before {
+    content: '🛠️';
+    display: inline-block;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: wrenchWobble 2.5s ease-in-out infinite;
 }
 
 .bubble h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 15px;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
 }
 
 .bubble h2 {
-    font-size: 15px;
-    font-weight: normal;
-    color: #555555;
-    line-height: 1.4;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #94a3b8;
+    line-height: 1.6;
 }
 
-/* Animation d'apparition des textes publicitaires */
-@keyframes fadeInUp {
+/* ==========================================================================
+   RESPONSIVE - OPTIMISATIONS MOBILES (< 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start; /* Aligne le bloc de maintenance vers le haut */
+        padding-top: 15vh;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    .bubble {
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+
+    .bubble h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Ajustements pour les pubs en bas de l'écran sur téléphone */
+    .ad-slide {
+        padding: 1.25rem;
+    }
+
+    .ad-content {
+        margin-bottom: 4.5rem; /* Évite les chevauchements avec les points sur petit écran */
+    }
+
+    .ad-title {
+        font-size: 1.4rem;
+    }
+
+    .ad-desc {
+        font-size: 0.85rem;
+    }
+
+    .ad-dots {
+        right: 0;
+        left: 0;
+        justify-content: center; /* Centre les points sur mobile pour une meilleure ergonomie */
+        bottom: 2rem;
+    }
+
+    .dot {
+        width: 12px; /* Un poil plus grand pour être cliquable facilement au doigt */
+        height: 12px;
+    }
+    
+    .dot.active {
+        width: 32px;
+    }
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+@keyframes mainAppear {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: scale(0.95) translateY(10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1) translateY(0);
     }
+}
+
+@keyframes wrenchWobble {
+    0%, 100% { transform: rotate(0deg); }
+    15% { transform: rotate(-15deg); }
+    30% { transform: rotate(10deg); }
+    45% { transform: rotate(-5deg); }
+    60% { transform: rotate(3deg); }
 }
