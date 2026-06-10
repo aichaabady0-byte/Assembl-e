@@ -5,14 +5,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Application de la police SYNE */
+    font-family: 'Syne', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 body {
     height: 100vh;
-    height: 100dvh; /* Gère les barres de navigation sur mobile (iOS/Android) */
+    height: 100dvh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -50,7 +51,6 @@ body {
     padding: 2rem;
 }
 
-/* Dégradé sombre par-dessus l'image pour garantir la lisibilité du texte */
 .ad-slide::before {
     content: '';
     position: absolute;
@@ -67,12 +67,11 @@ body {
     visibility: visible;
 }
 
-/* Contenu de la publicité (Titre, Desc...) */
 .ad-content {
     position: relative;
-    z-index: 3; /* Passe au-dessus du filtre sombre */
+    z-index: 3;
     max-width: 500px;
-    margin-bottom: 4rem; /* Laisse de la place pour les points en dessous sur mobile */
+    margin-bottom: 4rem;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s;
@@ -86,26 +85,31 @@ body {
 .ad-tag {
     background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     color: #ffffff;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     font-weight: 700;
-    padding: 0.3rem 0.7rem;
+    padding: 0.35rem 0.8rem;
     border-radius: 50px;
-    display: inline-block;
+    display: inline-flex; /* Aligne l'icône vectorielle et le texte */
+    align-items: center;
+    gap: 6px;
     margin-bottom: 0.75rem;
     letter-spacing: 1px;
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-/* Changement de couleur dynamique pour le tag événement */
 .ad-slide:nth-child(3) .ad-tag {
     background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
     box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
 }
 
+.ad-tag i {
+    font-size: 0.9rem; /* Taille de l'icône dans le tag */
+}
+
 .ad-title {
     font-size: 1.8rem;
-    font-weight: 800;
+    font-weight: 800; /* Très gras, rendu magnifique avec Syne */
     color: #ffffff;
     margin-bottom: 0.5rem;
     line-height: 1.2;
@@ -117,7 +121,7 @@ body {
     line-height: 1.5;
 }
 
-/* INDICATION DE DÉFILEMENT (LES POINTS) */
+/* LES POINTS DE NAVIGATION */
 .ad-dots {
     position: absolute;
     bottom: 2.5rem;
@@ -138,13 +142,13 @@ body {
 
 .dot.active {
     background-color: #3b82f6;
-    width: 28px; /* Effet de pilule moderne pour le point actif */
+    width: 28px;
     border-radius: 50px;
     box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
 }
 
 /* ==========================================================================
-   BOÎTE DE MAINTENANCE (UI DESIGN STYLE)
+   BOÎTE DE MAINTENANCE (UI DESIGN)
    ========================================================================== */
 main {
     position: relative;
@@ -154,33 +158,43 @@ main {
     padding: 1.5rem;
 }
 
-/* Style Glassmorphism transparent et haut de gamme */
 .bubble {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     padding: 2.5rem 2rem;
     width: 100%;
     text-align: center;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
     animation: mainAppear 0.8s ease-out;
 }
 
-/* Logo ou icône animée de maintenance */
-.bubble::before {
-    content: '🛠️';
-    display: inline-block;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    animation: wrenchWobble 2.5s ease-in-out infinite;
+/* Le conteneur rond pour l'icône vectorielle centrale */
+.maintenance-icon-box {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.maintenance-icon-box i {
+    font-size: 2rem;
+    color: #3b82f6; /* Icône en bleu néon */
+    animation: toolWobble 2.5s ease-in-out infinite;
 }
 
 .bubble h1 {
-    font-size: 1.75rem;
-    font-weight: 800;
+    font-size: 1.9rem;
+    font-weight: 800; /* Met en valeur l'aspect géométrique de Syne */
     color: #ffffff;
     margin-bottom: 0.75rem;
     letter-spacing: -0.5px;
@@ -198,8 +212,8 @@ main {
    ========================================================================== */
 @media (max-width: 768px) {
     body {
-        align-items: flex-start; /* Aligne le bloc de maintenance vers le haut */
-        padding-top: 15vh;
+        align-items: flex-start;
+        padding-top: 12vh;
     }
 
     main {
@@ -212,16 +226,15 @@ main {
     }
 
     .bubble h1 {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
 
-    /* Ajustements pour les pubs en bas de l'écran sur téléphone */
     .ad-slide {
         padding: 1.25rem;
     }
 
     .ad-content {
-        margin-bottom: 4.5rem; /* Évite les chevauchements avec les points sur petit écran */
+        margin-bottom: 4.5rem;
     }
 
     .ad-title {
@@ -235,12 +248,12 @@ main {
     .ad-dots {
         right: 0;
         left: 0;
-        justify-content: center; /* Centre les points sur mobile pour une meilleure ergonomie */
+        justify-content: center;
         bottom: 2rem;
     }
 
     .dot {
-        width: 12px; /* Un poil plus grand pour être cliquable facilement au doigt */
+        width: 12px;
         height: 12px;
     }
     
@@ -263,10 +276,11 @@ main {
     }
 }
 
-@keyframes wrenchWobble {
+/* Animation douce d'oscillation pour l'icône vectorielle */
+@keyframes toolWobble {
     0%, 100% { transform: rotate(0deg); }
-    15% { transform: rotate(-15deg); }
-    30% { transform: rotate(10deg); }
-    45% { transform: rotate(-5deg); }
-    60% { transform: rotate(3deg); }
+    15% { transform: rotate(-12deg); }
+    30% { transform: rotate(8deg); }
+    45% { transform: rotate(-4deg); }
+    60% { transform: rotate(2deg); }
 }
