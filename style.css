@@ -284,3 +284,9 @@ main {
     45% { transform: rotate(-4deg); }
     60% { transform: rotate(2deg); }
 }
+.ad-link {
+    color: #5865F2; /* Couleur officielle Discord */
+    font-weight: 700;
+    text-decoration: underline;
+    word-break: break-all; /* Évite que le lien dépasse sur les petits téléphones */
+}
