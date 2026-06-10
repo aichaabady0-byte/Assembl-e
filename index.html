@@ -7,20 +7,52 @@
   <title>La Constitution - RP</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-image: url('backround.png');">
+<body>
   
-  <canvas id="particles-canvas"></canvas>
+  <!-- Système de Pubs / Partenaires en arrière-plan Fullscreen -->
+  <div class="fullscreen-ads">
+    <!-- Pub 1 -->
+    <div class="ad-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('pub1.png');">
+      <div class="ad-content">
+        <span class="ad-tag">Sponsorisé</span>
+        <h3 class="ad-title">Rejoignez le Serveur Discord !</h3>
+        <p class="ad-desc">Ne manquez aucune annonce officielle, votez les lois et participez aux débats de la communauté.</p>
+      </div>
+    </div>
+    
+    <!-- Pub 2 -->
+    <div class="ad-slide" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('pub2.png');">
+      <div class="ad-content">
+        <span class="ad-tag">Partenaire</span>
+        <h3 class="ad-title">Boutique Officielle</h3>
+        <p class="ad-desc">Soutenez le développement du projet RP et obtenez des avantages exclusifs en jeu.</p>
+      </div>
+    </div>
 
+    <!-- Pub 3 -->
+    <div class="ad-slide" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('pub3.png');">
+      <div class="ad-content">
+        <span class="ad-tag">Événement</span>
+        <h3 class="ad-title">Session Recrutement</h3>
+        <p class="ad-desc">Le staff recrute des modérateurs et des animateurs motivés. Tentez votre chance !</p>
+      </div>
+    </div>
+
+    <!-- Les fameux Points qui représentent le défilement des pubs -->
+    <div class="ad-dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <!-- Contenu Principal (Boîte de Maintenance) -->
   <main id="app-container">
     <div id="maintenance-screen" class="bubble">
       <h1>Under Maintenance</h1>
       <h2>We are undergoing unscheduled maintenance<br>and will return as soon as possible!</h2>
     </div>
   </main>
-  
-  <footer>
-    <small>© La Constitution RP</small>
-  </footer>
 
   <script src="script.js"></script>
 </body>
