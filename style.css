@@ -5,7 +5,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* Application de la police SYNE */
     font-family: 'Syne', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -90,7 +89,7 @@ body {
     font-weight: 700;
     padding: 0.35rem 0.8rem;
     border-radius: 50px;
-    display: inline-flex; /* Aligne l'icône vectorielle et le texte */
+    display: inline-flex;
     align-items: center;
     gap: 6px;
     margin-bottom: 0.75rem;
@@ -104,12 +103,12 @@ body {
 }
 
 .ad-tag i {
-    font-size: 0.9rem; /* Taille de l'icône dans le tag */
+    font-size: 0.9rem;
 }
 
 .ad-title {
     font-size: 1.8rem;
-    font-weight: 800; /* Très gras, rendu magnifique avec Syne */
+    font-weight: 800;
     color: #ffffff;
     margin-bottom: 0.5rem;
     line-height: 1.2;
@@ -119,6 +118,19 @@ body {
     font-size: 0.95rem;
     color: #94a3b8;
     line-height: 1.5;
+}
+
+.ad-link {
+    color: #3b82f6; 
+    font-weight: 700;
+    text-decoration: none;
+    word-break: break-all;
+    transition: color 0.2s ease;
+}
+
+.ad-link:hover {
+    color: #60a5fa;
+    text-decoration: underline;
 }
 
 /* LES POINTS DE NAVIGATION */
@@ -172,7 +184,6 @@ main {
     animation: mainAppear 0.8s ease-out;
 }
 
-/* Le conteneur rond pour l'icône vectorielle centrale */
 .maintenance-icon-box {
     width: 70px;
     height: 70px;
@@ -188,13 +199,13 @@ main {
 
 .maintenance-icon-box i {
     font-size: 2rem;
-    color: #3b82f6; /* Icône en bleu néon */
+    color: #3b82f6;
     animation: toolWobble 2.5s ease-in-out infinite;
 }
 
 .bubble h1 {
     font-size: 1.9rem;
-    font-weight: 800; /* Met en valeur l'aspect géométrique de Syne */
+    font-weight: 800;
     color: #ffffff;
     margin-bottom: 0.75rem;
     letter-spacing: -0.5px;
@@ -276,17 +287,10 @@ main {
     }
 }
 
-/* Animation douce d'oscillation pour l'icône vectorielle */
 @keyframes toolWobble {
     0%, 100% { transform: rotate(0deg); }
     15% { transform: rotate(-12deg); }
     30% { transform: rotate(8deg); }
     45% { transform: rotate(-4deg); }
     60% { transform: rotate(2deg); }
-}
-.ad-link {
-    color: #5865F2; /* Couleur officielle Discord */
-    font-weight: 700;
-    text-decoration: underline;
-    word-break: break-all; /* Évite que le lien dépasse sur les petits téléphones */
 }
