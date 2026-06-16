@@ -1,35 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const slides = document.querySelectorAll('.ad-slide');
-  const dots = document.querySelectorAll('.dot');
-  let currentSlide = 0;
-  const slideInterval = 5000; // Temps d'affichage par pub (5 secondes)
+    const slides = document.querySelectorAll(".ad-slide");
+    const dots = document.querySelectorAll(".dot");
+    let currentSlide = 0;
+    const slideIntervalTime = 5000; // 5 secondes par pub
+    let slideInterval;
 
-  function nextSlide() {
-    // Retirer la classe active de la pub et du point actuel
-    slides[currentSlide].classList.remove('active');
-    dots[currentSlide].classList.remove('active');
-    
-    // Passer à la suivante (et revenir à 0 si on dépasse)
-    currentSlide = (currentSlide + 1) % slides.length;
-    
-    // Ajouter la classe active sur la nouvelle pub et le nouveau point
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
-  }
+    // Fonction pour changer de diapositive
+    function changeSlide(nextSlideIndex) {
+        // Retire la classe active de la slide et du point actuels
+        slides[currentSlide].classList.remove("active");
+        dots[currentSlide].classList.remove("active");
 
-  // Lancer le défilement automatique
-  setInterval(nextSlide, slideInterval);
+        // Met à jour l'index actuel
+        currentSlide = nextSlideIndex;
 
-  // Permettre aussi de cliquer sur les points pour changer manuellement de pub
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      slides[currentSlide].classList.remove('active');
-      dots[currentSlide].classList.remove('active');
-      
-      currentSlide = index;
-      
-      slides[currentSlide].classList.add('active');
-      dots[currentSlide].classList.add('active');
+        // Ajoute la classe active sur la nouvelle slide et le nouveau point
+        slides[currentSlide].classList.add("active");
+        dots[currentSlide].classList.add("active");
+    }
+
+    // Passage automatique à la suivante
+    function nextSlide() {
+        let nextSlideIndex = (currentSlide + 1) % slides.length;
+        changeSlide(nextSlideIndex);
+    }
+
+    // Démarrer le défilement automatique
+    function startInterval() {
+        slideInterval = setInterval(nextSlide, slideIntervalTime);
+    }
+
+    // Réinitialiser le chronomètre quand l'utilisateur clique manuellement
+    function resetInterval() {
+        clearInterval(slideInterval);
+        startInterval();
+    }
+
+    // Rendre les points (dots) cliquables
+    dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+            if (currentSlide !== index) {
+                changeSlide(index);
+                resetInterval();
+            }
+        });
     });
-  });
+
+    // Initialisation
+    startInterval();
 });
