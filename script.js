@@ -2,41 +2,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const slides = document.querySelectorAll(".ad-slide");
     const dots = document.querySelectorAll(".dot");
     let currentSlide = 0;
-    const slideIntervalTime = 5000; // 5 secondes par pub
+    const slideIntervalTime = 5000; // Les pubs changent toutes les 5 secondes
     let slideInterval;
 
-    // Fonction pour changer de diapositive
+    // Fonction pour changer de pub et afficher son texte
     function changeSlide(nextSlideIndex) {
-        // Retire la classe active de la slide et du point actuels
+        // Retire le mode actif de la pub actuelle
         slides[currentSlide].classList.remove("active");
         dots[currentSlide].classList.remove("active");
 
-        // Met à jour l'index actuel
+        // Passe à la pub suivante
         currentSlide = nextSlideIndex;
 
-        // Ajoute la classe active sur la nouvelle slide et le nouveau point
+        // Active la nouvelle pub (le CSS va automatiquement afficher le titre/desc)
         slides[currentSlide].classList.add("active");
         dots[currentSlide].classList.add("active");
     }
 
-    // Passage automatique à la suivante
+    // Fonction pour passer automatiquement à la suivante
     function nextSlide() {
         let nextSlideIndex = (currentSlide + 1) % slides.length;
         changeSlide(nextSlideIndex);
     }
 
-    // Démarrer le défilement automatique
+    // Lance le défilement automatique
     function startInterval() {
         slideInterval = setInterval(nextSlide, slideIntervalTime);
     }
 
-    // Réinitialiser le chronomètre quand l'utilisateur clique manuellement
+    // Relance le compteur si on clique manuellement sur un point
     function resetInterval() {
         clearInterval(slideInterval);
         startInterval();
     }
 
-    // Rendre les points (dots) cliquables
+    // Permet de cliquer sur les points en bas pour changer de pub
     dots.forEach((dot, index) => {
         dot.addEventListener("click", () => {
             if (currentSlide !== index) {
@@ -46,6 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Initialisation
+    // Initialisation au chargement de la page
     startInterval();
 });
