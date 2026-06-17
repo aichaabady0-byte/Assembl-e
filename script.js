@@ -142,22 +142,32 @@ function parseCustomTags(text, elementId) {
         return formatTimeLeft(timeLeft, key);
     });
 
-    // RENDU NOUVEAU [startedat:"17/06/2026:22:00"] (Temps écoulé depuis)
-    parsed = parsed.replace(/\[startedat:"(\d{2})\/(\d{2})\/(\d{4}):(\d{2}):(\d{2})"\]/g, (match, j, mo, a, h, mi) => {
+    // RENDU AVANCÉ [startedat:"17/06/2026:22:00" max:"02:15:00"]
+    parsed = parsed.replace(/\[startedat:"(\d{2})\/(\d{2})\/(\d{4}):(\d{2}):(\d{2})"(?:\s+max:"(\d{2}):(\d{2}):(\d{2})")?\]/g, (match, j, mo, a, h, mi, maxH, maxM, maxS) => {
         const key = elementId + match;
         const startDate = new Date(`${a}-${mo}-${j}T${h}:${mi}:00`);
         let timeElapsed = Date.now() - startDate.getTime();
         
         if (timeElapsed < 0) return "<span style='color:#3b82f6; font-weight:bold;'>PAS COMMENCÉ</span>";
+
+        let isMaxReached = false;
+        if (maxH && maxM && maxS) {
+            // Conversion de la limite max (ex: 02:15:00) en millisecondes
+            const maxLimitMs = ((parseInt(maxH) * 3600) + (parseInt(maxM) * 60) + parseInt(maxS)) * 1000;
+            if (timeElapsed >= maxLimitMs) {
+                timeElapsed = maxLimitMs; // On bloque le chrono au maximum défini
+                isMaxReached = true;
+            }
+        }
         
-        return formatTimeElapsed(timeElapsed, key);
+        return formatTimeElapsed(timeElapsed, key, isMaxReached);
     });
 
     return parsed;
 }
 
-// Générateur HTML pour le temps écoulé (Même effet visuel de glissement)
-function formatTimeElapsed(ms, key) {
+// Générateur HTML avec prise en compte du blocage au maximum
+function formatTimeElapsed(ms, key, isMaxReached) {
     let totalSecs = Math.floor(ms / 1000);
     let days = Math.floor(totalSecs / 86400);
     totalSecs %= 86400;
@@ -175,72 +185,37 @@ function formatTimeElapsed(ms, key) {
         lastClockHTML[key] = [];
     }
 
-    let htmlOutput = `<span class="digital-clock" style="border-color: rgba(34, 197, 94, 0.2); box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);">`;
+    // Changement de style si le temps maximum est atteint (Affiche une lueur rouge/orange au lieu de verte)
+    let borderColor = isMaxReached ? "rgba(239, 68, 68, 0.4)" : "rgba(34, 197, 94, 0.2)";
+    let boxShadow = isMaxReached ? "0 0 15px rgba(239, 68, 68, 0.2)" : "0 0 15px rgba(34, 197, 94, 0.1)";
+    let digitColor = isMaxReached ? "#f43f5e" : "#22c55e";
+    let sepColor = isMaxReached ? "#e11d48" : "#16a34a";
+
+    let htmlOutput = `<span class="digital-clock" style="border-color: ${borderColor}; box-shadow: ${boxShadow};">`;
     
     for (let i = 0; i < rawString.length; i++) {
         let char = rawString[i];
         
         if (/[0-9]/.test(char)) {
             let hasChanged = lastClockHTML[key][i] !== char;
-            let animateClass = hasChanged ? "digit-animate" : "";
+            let animateClass = (hasChanged && !isMaxReached) ? "digit-animate" : "";
             
-            // On lui donne une couleur verte (#22c55e) pour le différencier d'un compte à rebours orange
-            htmlOutput += `<span class="clock-digit" style="color: #22c55e;"><span class="${animateClass}">${char}</span></span>`;
+            htmlOutput += `<span class="clock-digit" style="color: ${digitColor};"><span class="${animateClass}">${char}</span></span>`;
         } else {
-            htmlOutput += `<span class="clock-sep" style="color: #16a34a;">${char}</span>`;
+            htmlOutput += `<span class="clock-sep" style="color: ${sepColor};">${char}</span>`;
         }
         
         lastClockHTML[key][i] = char;
     }
     
     htmlOutput += `</span>`;
+
+    if (isMaxReached) {
+        htmlOutput += ` <span style="color:#ef4444; font-weight:800; font-size:0.85rem; text-transform:uppercase; margin-left:5px; letter-spacing:1px;">TEMPS MAX</span>`;
+    }
+
     return htmlOutput;
 }
-// ==========================================================================
-// BOUCLE DE RENDU LIVE & SYNCHRO FIREBASE
-// ==========================================================================
-function updateDisplay() {
-    if (!currentRawData) return;
-
-    // Mise à jour du titre de l'onglet du navigateur en temps réel avec les scores
-    const s1 = currentRawData.team1?.score || 0;
-    const s2 = currentRawData.team2?.score || 0;
-    document.title = `[${s1} - ${s2}] FIFA 26 - Match Live`;
-
-    if (currentRawData.countrySlogan) {
-        document.getElementById("country-slogan").innerHTML = parseCustomTags(currentRawData.countrySlogan, "country-slogan");
-    }
-
-    if (currentRawData.team1) {
-        document.getElementById("name-1").innerHTML = parseCustomTags(currentRawData.team1.name, "name-1");
-        document.getElementById("slogan-1").innerHTML = parseCustomTags(currentRawData.team1.slogan, "slogan-1");
-        document.getElementById("flag-1").src = currentRawData.team1.flagUrl || "https://flagcdn.com/w320/un.png";
-        document.getElementById("score-1").innerText = String(currentRawData.team1.score).padStart(2, '0');
-        
-        const color1 = currentRawData.team1.color || "#3b82f6";
-        document.getElementById("score-1").style.color = color1;
-        document.getElementById("score-1").style.borderColor = color1 + "40";
-        document.getElementById("score-1").style.textShadow = `0 0 25px ${color1}`;
-        document.getElementById("card-1").style.borderColor = color1 + "20";
-    }
-
-    if (currentRawData.team2) {
-        document.getElementById("name-2").innerHTML = parseCustomTags(currentRawData.team2.name, "name-2");
-        document.getElementById("slogan-2").innerHTML = parseCustomTags(currentRawData.team2.slogan, "slogan-2");
-        document.getElementById("flag-2").src = currentRawData.team2.flagUrl || "https://flagcdn.com/w320/un.png";
-        document.getElementById("score-2").innerText = String(currentRawData.team2.score).padStart(2, '0');
-        
-        const color2 = currentRawData.team2.color || "#ef4444";
-        document.getElementById("score-2").style.color = color2;
-        document.getElementById("score-2").style.borderColor = color2 + "40";
-        document.getElementById("score-2").style.textShadow = `0 0 25px ${color2}`;
-        document.getElementById("card-2").style.borderColor = color2 + "20";
-    }
-}
-
-// Boucle 1 FPS pour l'effet de glissement continu des chiffres de l'horloge
-setInterval(updateDisplay, 1000);
-
 // Envoi des données vers Realtime Database
 document.getElementById("save-admin-btn").addEventListener("click", () => {
     countdownTargets = {}; // Réinitialise les timestamps éphémères locaux
