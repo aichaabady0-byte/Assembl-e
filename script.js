@@ -196,46 +196,6 @@ function formatTimeElapsed(ms, key) {
     htmlOutput += `</span>`;
     return htmlOutput;
 }
-// Générateur HTML individuel pour animer la descente des chiffres
-function formatTimeLeft(ms, key) {
-    let totalSecs = Math.floor(ms / 1000);
-    let days = Math.floor(totalSecs / 86400);
-    totalSecs %= 86400;
-    let hours = Math.floor(totalSecs / 3600);
-    totalSecs %= 3600;
-    let mins = Math.floor(totalSecs / 60);
-    let secs = totalSecs % 60;
-
-    let rawString = "";
-    if (days > 0) rawString += String(days).padStart(2, '0') + "j ";
-    if (hours > 0 || days > 0) rawString += String(hours).padStart(2, '0') + "h ";
-    rawString += String(mins).padStart(2, '0') + "m " + String(secs).padStart(2, '0') + "s";
-
-    if (!lastClockHTML[key]) {
-        lastClockHTML[key] = [];
-    }
-
-    let htmlOutput = `<span class="digital-clock">`;
-    
-    for (let i = 0; i < rawString.length; i++) {
-        let char = rawString[i];
-        
-        if (/[0-9]/.test(char)) {
-            let hasChanged = lastClockHTML[key][i] !== char;
-            let animateClass = hasChanged ? "digit-animate" : "";
-            
-            htmlOutput += `<span class="clock-digit"><span class="${animateClass}">${char}</span></span>`;
-        } else {
-            htmlOutput += `<span class="clock-sep">${char}</span>`;
-        }
-        
-        lastClockHTML[key][i] = char;
-    }
-    
-    htmlOutput += `</span>`;
-    return htmlOutput;
-}
-
 // ==========================================================================
 // BOUCLE DE RENDU LIVE & SYNCHRO FIREBASE
 // ==========================================================================
