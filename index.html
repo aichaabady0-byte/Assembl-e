@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tableau de Score Personnalisable - RP</title>
+  <title>Tableau de Score Premium - RP</title>
   
+  <!-- Polices et Icônes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -14,18 +15,21 @@
 </head>
 <body>
 
+  <!-- ==========================================
+       LE GRAND PANNEAU CENTRAL
+       ========================================== -->
   <div class="main-scoreboard">
     <div class="board-header">
       <div class="country-info">
-        <p class="board-subtitle">FIFA 26</p>
-        <h1 id="country-slogan">Chargement du slogan...</h1>
+        <p class="board-subtitle">Gouvernement National RP</p>
+        <h1 id="country-slogan">Chargement...</h1>
       </div>
     </div>
 
     <hr class="board-divider">
 
     <div class="scores-container">
-      
+      <!-- ÉQUIPE 1 -->
       <div id="card-1" class="score-card">
         <div class="team-header">
           <img id="flag-1" src="" alt="Drapeau Équipe 1" class="team-flag">
@@ -37,6 +41,7 @@
         <div id="score-1" class="score-display">00</div>
       </div>
 
+      <!-- ÉQUIPE 2 -->
       <div id="card-2" class="score-card">
         <div class="team-header">
           <img id="flag-2" src="" alt="Drapeau Équipe 2" class="team-flag">
@@ -47,32 +52,48 @@
         </div>
         <div id="score-2" class="score-display">00</div>
       </div>
-
     </div>
   </div>
 
+  <!-- ==========================================
+       PANNEAU ADMIN CACHÉ (MODALE)
+       ========================================== -->
   <div id="admin-modal" class="admin-overlay">
     <div class="admin-box">
       <div class="admin-header">
-        <h2><i class="ri-settings-4-line"></i> Configuration du Tableau</h2>
+        <h2><i class="ri-settings-4-line"></i> Configuration Avancée</h2>
         <button id="close-admin" class="btn-close">&times;</button>
       </div>
       
       <div class="admin-body">
+        <!-- Slogan National -->
         <div class="input-group">
           <label>Slogan Principal du Pays</label>
+          <div class="toolbar" data-target="input-slogan-country">
+            <button type="button" class="btn-format" data-type="bold" title="Gras"><i class="ri-bold"></i></button>
+            <button type="button" class="btn-format" data-type="color" title="Couleur"><i class="ri-font-color"></i></button>
+          </div>
           <input type="text" id="input-slogan-country">
         </div>
 
         <div class="admin-columns">
+          <!-- Équipe 1 -->
           <div class="admin-col">
             <h3>Équipe 1</h3>
             <div class="input-group">
               <label>Nom</label>
+              <div class="toolbar" data-target="input-name-1">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
               <input type="text" id="input-name-1">
             </div>
             <div class="input-group">
               <label>Slogan de l'Équipe</label>
+              <div class="toolbar" data-target="input-slogan-1">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
               <input type="text" id="input-slogan-1">
             </div>
             <div class="input-group">
@@ -91,14 +112,23 @@
             </div>
           </div>
 
+          <!-- Équipe 2 -->
           <div class="admin-col">
             <h3>Équipe 2</h3>
             <div class="input-group">
               <label>Nom</label>
+              <div class="toolbar" data-target="input-name-2">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
               <input type="text" id="input-name-2">
             </div>
             <div class="input-group">
               <label>Slogan de l'Équipe</label>
+              <div class="toolbar" data-target="input-slogan-2">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
               <input type="text" id="input-slogan-2">
             </div>
             <div class="input-group">
@@ -118,11 +148,24 @@
           </div>
         </div>
 
+        <!-- ==========================================
+             INSTRUCTIONS / AIDE-MÉMOIRE (Pour pas oublier mdr)
+             ========================================== -->
+        <div class="admin-help-box">
+          <h4><i class="ri-information-line"></i> Aide-mémoire des codes magiques :</h4>
+          <ul>
+            <li><strong>Mise en forme :</strong> Sélectionne un texte et clique sur <i class="ri-bold"></i> ou <i class="ri-font-color"></i> pour formater rapidement.</li>
+            <li><strong>Compte à rebours dynamique :</strong> <code>[countdown:"20mi"]</code> (ou <code>s</code> pour secondes, <code>h</code> pour heures, <code>j</code> pour jours). <br><small>Exemple : Fin d'élection dans [countdown:"15mi"]</small></li>
+            <li><strong>Chrono jusqu'à une date :</strong> <code>[timer:"JJ/MM/AAAA:HH:MM"]</code> <br><small>Exemple : Fin de session [timer:"17/06/2026:22:00"]</small></li>
+          </ul>
+        </div>
+
         <button id="save-admin-btn" class="btn-save">Mettre à jour le Tableau</button>
       </div>
     </div>
   </div>
 
+  <!-- SDK Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   
