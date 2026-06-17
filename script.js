@@ -2,13 +2,13 @@
 // CONFIGURATION CONFIG FIREBASE (Remplis avec tes identifiants)
 // ==========================================================================
 const firebaseConfig = {
-    apiKey: "TON_API_KEY",
-    authDomain: "TON_AUTH_DOMAIN",
-    databaseURL: "TON_DATABASE_URL_REALTIME", // URL de ta Realtime Database
-    projectId: "TON_PROJECT_ID",
-    storageBucket: "TON_STORAGE_BUCKET",
-    messagingSenderId: "TON_MESSAGING_SENDER_ID",
-    appId: "TON_APP_ID"
+    apiKey: "AIzaSyAlQBqaDBx1efC89wSEMBMRh6EzRUvaKiU",
+    authDomain: "match-footlaconstitutionrp.firebaseapp.com",
+    databaseURL: "https://match-footlaconstitutionrp-default-rtdb.firebaseio.com/", // URL de ta Realtime Database
+    projectId: "match-footlaconstitutionrp",
+    storageBucket: "match-footlaconstitutionrp.firebasestorage.app",
+    messagingSenderId: "19180021045",
+    appId: "1:19180021045:web:8f1e61cd43d7900f1a187c"
 };
 
 // Initialisation de Firebase
