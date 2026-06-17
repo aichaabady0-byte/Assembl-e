@@ -1,11 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Titre par défaut de l'onglet -->
+  <!-- Titre par défaut de l'onglet (sera écrasé en direct par le JS) -->
   <title>FIFA 26 - Live Stats</title>
   
-  <!-- CONFIGURATION DU LIEN DE PARTAGE (Open Graph / Discord / WhatsApp) -->
+  <!-- CONFIGURATION DU LIEN DE PARTAGE (Open Graph / Discord / WhatsApp / SMS) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="FIFA 26 - Tableau des Scores RP">
   <meta property="og:description" content="Suis l'évolution du match et des stats de la Constitution RP en direct avec intégration de timers réels !">
@@ -13,7 +15,7 @@
   
   <!-- Meta additionnelles pour Twitter/Discord -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#0f172a"> <!-- Couleur de la barre du navigateur sur mobile et Discord -->
+  <meta name="theme-color" content="#0f172a"> <!-- Couleur de l'entête sur mobile et Discord -->
 
   <!-- Polices et Icônes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,3 +25,166 @@
   
   <link rel="stylesheet" href="style.css">
 </head>
+<body>
+
+  <!-- ==========================================
+       LE GRAND PANNEAU CENTRAL
+       ========================================== -->
+  <div class="main-scoreboard">
+    <div class="board-header">
+      <!-- Logo officiel FIFA 2026 -->
+      <div class="logo-container">
+        <img src="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel.jpg" alt="Logo FIFA World Cup 2026" class="fifa-logo">
+      </div>
+      <div class="country-info">
+        <p class="board-subtitle">FIFA 26</p>
+        <h1 id="country-slogan">Chargement...</h1>
+      </div>
+    </div>
+
+    <hr class="board-divider">
+
+    <div class="scores-container">
+      <!-- ÉQUIPE 1 -->
+      <div id="card-1" class="score-card">
+        <div class="team-header">
+          <img id="flag-1" src="" alt="Drapeau Équipe 1" class="team-flag">
+          <div>
+            <h2 id="name-1" class="card-title">Équipe 1</h2>
+            <p id="slogan-1" class="team-slogan">Slogan Équipe 1</p>
+          </div>
+        </div>
+        <div id="score-1" class="score-display">00</div>
+      </div>
+
+      <!-- ÉQUIPE 2 -->
+      <div id="card-2" class="score-card">
+        <div class="team-header">
+          <img id="flag-2" src="" alt="Drapeau Équipe 2" class="team-flag">
+          <div>
+            <h2 id="name-2" class="card-title">Équipe 2</h2>
+            <p id="slogan-2" class="team-slogan">Slogan Équipe 2</p>
+          </div>
+        </div>
+        <div id="score-2" class="score-display">00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PANNEAU ADMIN CACHÉ (MODALE)
+       ========================================== -->
+  <div id="admin-modal" class="admin-overlay">
+    <div class="admin-box">
+      <div class="admin-header">
+        <h2><i class="ri-settings-4-line"></i> Configuration Avancée</h2>
+        <button id="close-admin" class="btn-close">&times;</button>
+      </div>
+      
+      <div class="admin-body">
+        <!-- Slogan National -->
+        <div class="input-group">
+          <label>Slogan Principal du Pays</label>
+          <div class="toolbar" data-target="input-slogan-country">
+            <button type="button" class="btn-format" data-type="bold" title="Gras"><i class="ri-bold"></i></button>
+            <button type="button" class="btn-format" data-type="color" title="Couleur"><i class="ri-font-color"></i></button>
+          </div>
+          <input type="text" id="input-slogan-country">
+        </div>
+
+        <div class="admin-columns">
+          <!-- Équipe 1 -->
+          <div class="admin-col">
+            <h3>Équipe 1</h3>
+            <div class="input-group">
+              <label>Nom</label>
+              <div class="toolbar" data-target="input-name-1">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
+              <input type="text" id="input-name-1">
+            </div>
+            <div class="input-group">
+              <label>Slogan de l'Équipe</label>
+              <div class="toolbar" data-target="input-slogan-1">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
+              <input type="text" id="input-slogan-1">
+            </div>
+            <div class="input-group">
+              <label>URL Drapeau / Image</label>
+              <input type="url" id="input-flag-1">
+            </div>
+            <div class="input-group-row">
+              <div class="input-group">
+                <label>Points</label>
+                <input type="number" id="input-score-1">
+              </div>
+              <div class="input-group">
+                <label>Couleur</label>
+                <input type="color" id="input-color-1" value="#3b82f6">
+              </div>
+            </div>
+          </div>
+
+          <!-- Équipe 2 -->
+          <div class="admin-col">
+            <h3>Équipe 2</h3>
+            <div class="input-group">
+              <label>Nom</label>
+              <div class="toolbar" data-target="input-name-2">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
+              <input type="text" id="input-name-2">
+            </div>
+            <div class="input-group">
+              <label>Slogan de l'Équipe</label>
+              <div class="toolbar" data-target="input-slogan-2">
+                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+              </div>
+              <input type="text" id="input-slogan-2">
+            </div>
+            <div class="input-group">
+              <label>URL Drapeau / Image</label>
+              <input type="url" id="input-flag-2">
+            </div>
+            <div class="input-group-row">
+              <div class="input-group">
+                <label>Points</label>
+                <input type="number" id="input-score-2">
+              </div>
+              <div class="input-group">
+                <label>Couleur</label>
+                <input type="color" id="input-color-2" value="#ef4444">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             INSTRUCTIONS / AIDE-MÉMOIRE
+             ========================================== -->
+        <div class="admin-help-box">
+          <h4><i class="ri-information-line"></i> Aide-mémoire des codes magiques :</h4>
+          <ul>
+            <li><strong>Mise en forme :</strong> Sélectionne un texte et clique sur <i class="ri-bold"></i> ou <i class="ri-font-color"></i> pour formater rapidement.</li>
+            <li><strong>Compte à rebours dynamique :</strong> <code>[countdown:"20mi"]</code> (ou <code>s</code> pour secondes, <code>h</code> pour heures, <code>j</code> pour jours). <br><small>Exemple : Fin d'élection dans [countdown:"15mi"]</small></li>
+            <li><strong>Chrono jusqu'à une date :</strong> <code>[timer:"JJ/MM/AAAA:HH:MM"]</code> <br><small>Exemple : Fin de session [timer:"17/06/2026:22:00"]</small></li>
+          </ul>
+        </div>
+
+        <button id="save-admin-btn" class="btn-save">Mettre à jour le Tableau</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDK Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <script src="script.js"></script>
+</body>
+</html>
