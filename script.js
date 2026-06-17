@@ -12,7 +12,7 @@ const firebaseConfig = {
     measurementId: "G-NXKQPYMDKE"
 };
 
-// Initialisation via le SDK Compat présent dans ton HTML
+// Initialisation via le SDK Compat (Chargé dans index.html)
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
@@ -145,7 +145,7 @@ function parseCustomTags(text, elementId) {
     return parsed;
 }
 
-// Création des structures HTML dynamiques pour l'animation de descente des chiffres
+// Générateur HTML individuel pour animer la descente des chiffres
 function formatTimeLeft(ms, key) {
     let totalSecs = Math.floor(ms / 1000);
     let days = Math.floor(totalSecs / 86400);
@@ -186,10 +186,15 @@ function formatTimeLeft(ms, key) {
 }
 
 // ==========================================================================
-// BOUCLE DE RAFRAÎCHISSEMENT ET RÉCEPTION / ENVOI FIREBASE
+// BOUCLE DE RENDU LIVE & SYNCHRO FIREBASE
 // ==========================================================================
 function updateDisplay() {
     if (!currentRawData) return;
+
+    // Mise à jour du titre de l'onglet du navigateur en temps réel avec les scores
+    const s1 = currentRawData.team1?.score || 0;
+    const s2 = currentRawData.team2?.score || 0;
+    document.title = `[${s1} - ${s2}] FIFA 26 - Match Live`;
 
     if (currentRawData.countrySlogan) {
         document.getElementById("country-slogan").innerHTML = parseCustomTags(currentRawData.countrySlogan, "country-slogan");
@@ -222,12 +227,12 @@ function updateDisplay() {
     }
 }
 
-// Boucle locale à 1 FPS pour l'actualisation visuelle fluide des timers
+// Boucle 1 FPS pour l'effet de glissement continu des chiffres de l'horloge
 setInterval(updateDisplay, 1000);
 
-// Sauvegarde vers Firebase
+// Envoi des données vers Realtime Database
 document.getElementById("save-admin-btn").addEventListener("click", () => {
-    countdownTargets = {}; // Reset les comptes à rebours éphémères à la mise à jour
+    countdownTargets = {}; // Réinitialise les timestamps éphémères locaux
 
     const tableData = {
         countrySlogan: document.getElementById("input-slogan-country").value,
@@ -252,7 +257,7 @@ document.getElementById("save-admin-btn").addEventListener("click", () => {
         .catch(err => alert("Erreur Firebase : " + err.message));
 });
 
-// Écoute en temps réel de Firebase
+// Écoute des mises à jour Firebase en direct
 database.ref("customScoreboard").on("value", (snapshot) => {
     currentRawData = snapshot.val();
     updateDisplay();
