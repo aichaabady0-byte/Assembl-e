@@ -3,50 +3,78 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Constitution - RP</title>
-  <link rel="icon" type="image/png" href="logo.png">
+  <title>Tableau Officiel - RP</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
-  <div class="fullscreen-ads">
-    <div class="ad-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('kylian-mbappe-lors-de-la-victoire-de-la-france-a-la-coupe-du-monde-2018-photo-sipa-franck-fife-1667232821.jpg');">
-      <div class="ad-content">
-        <span class="ad-tag"><i class="ri-advertisement-line"></i> Sponsorisé</span>
-        <h3 class="ad-title">On la remporte ?</h3>
-        <p class="ad-desc">Allez, on va la gagner cette coupe !</p>
-      </div>
-    </div>
-    
-    <div class="ad-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('image.png');">
-      <div class="ad-content">
-        <span class="ad-tag"><i class="ri-code-s-slash-line"></i> Développement</span>
-        <h3 class="ad-title">Soutenez-nous !</h3>
-        <p class="ad-desc">Soutenez le développement du jeu ainsi que les futures mises à jour.</p>
+
+  <div class="main-scoreboard">
+    <div class="board-header">
+      <img id="country-flag" src="https://flagcdn.com/w320/fr.png" alt="Drapeau">
+      <div class="country-info">
+        <h1 id="country-slogan">Liberté, Égalité, Fraternité</h1>
+        <p class="board-subtitle">République Démocratique RP</p>
       </div>
     </div>
 
-    <div class="ad-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('1920x1080.jpg');">
-      <div class="ad-content">
-        <span class="ad-tag tag-pink"><i class="ri-code-s-slash-line"></i> Publicité</span>
-        <h3 class="ad-title">STARLINK</h3>
-        <p class="ad-desc">Join Starlink Today !</p>
-      </div>
-    </div>
+    <hr class="board-divider">
 
-    <div class="ad-dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+    <div class="scores-container">
+      <div class="score-card">
+        <h2 class="card-title">Majorité Présidentielle</h2>
+        <div id="score-1" class="score-display">00</div>
+      </div>
+
+      <div class="score-card">
+        <h2 class="card-title">Opposition Nationale</h2>
+        <div id="score-2" class="score-display">00</div>
+      </div>
     </div>
   </div>
 
+  <div id="admin-modal" class="admin-overlay">
+    <div class="admin-box">
+      <div class="admin-header">
+        <h2><i class="ri-settings-4-line"></i> Panneau d'Administration</h2>
+        <button id="close-admin" class="btn-close">&times;</button>
+      </div>
+      
+      <div class="admin-body">
+        <div class="input-group">
+          <label>Slogan du Pays</label>
+          <input type="text" id="input-slogan" placeholder="Ex: Liberté, Égalité, Fraternité">
+        </div>
+
+        <div class="input-group">
+          <label>URL du Drapeau (Image)</label>
+          <input type="url" id="input-flag" placeholder="https://lien-de-mon-image.png">
+        </div>
+
+        <div class="admin-scores-row">
+          <div class="input-group">
+            <label>Points Majorité</label>
+            <input type="number" id="input-score-1" value="0">
+          </div>
+          <div class="input-group">
+            <label>Points Opposition</label>
+            <input type="number" id="input-score-2" value="0">
+          </div>
+        </div>
+
+        <button id="save-admin-btn" class="btn-save">Mettre à jour Firebase</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
   <script src="script.js"></script>
 </body>
 </html>
