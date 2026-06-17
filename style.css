@@ -1,6 +1,5 @@
-/* ==========================================
-   RESET & BASES
-   ========================================== */
+/* (Garde l'intégralité du style.css précédent et ajoute/modifie ces classes-ci) */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -20,9 +19,6 @@ body {
     padding: 2rem;
 }
 
-/* ==========================================
-   LE SCOREBOARD
-   ========================================== */
 .main-scoreboard {
     background: rgba(15, 23, 42, 0.4);
     backdrop-filter: blur(30px);
@@ -35,177 +31,161 @@ body {
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
 }
 
-.board-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-}
+.board-header { text-align: center; margin-bottom: 2.5rem; }
+.board-subtitle { font-size: 1rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 0.5rem; }
+#country-slogan { font-size: 2.5rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
+.board-divider { border: 0; height: 1px; background: linear-gradient(to right, rgba(255,255,255,0), rgba(255, 255, 255, 0.1) 50%, rgba(255,255,255,0)); margin-bottom: 3.5rem; }
+.scores-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.score-card { background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.03); padding: 2.5rem; border-radius: 28px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02); transition: border-color 0.5s ease; }
+.team-header { display: flex; align-items: center; gap: 1 Clarify; margin-bottom: 2rem; text-align: left; }
+.team-flag { width: 80px; height: 50px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+.card-title { font-size: 1.6rem; color: #ffffff; font-weight: 800; }
+.team-slogan { font-size: 0.95rem; color: #94a3b8; margin-top: 0.2rem; }
+.score-display { font-family: 'Orbitron', sans-serif; font-size: 7.5rem; font-weight: 900; text-align: center; background: rgba(0, 0, 0, 0.4); padding: 1rem 0; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05); transition: color 0.5s ease, text-shadow 0.5s ease, border-color 0.5s ease; }
 
-.board-subtitle {
-    font-size: 1rem;
-    color: #64748b;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 0.5rem;
-}
-
-#country-slogan {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-}
-
-.board-divider {
-    border: 0;
-    height: 1px;
-    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255, 255, 255, 0.1) 50%, rgba(255,255,255,0));
-    margin-bottom: 3.5rem;
-}
-
-/* Grille des équipes */
-.scores-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-.score-card {
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    padding: 2.5rem;
-    border-radius: 28px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
-    transition: border-color 0.5s ease;
-}
-
-.team-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    text-align: left;
-}
-
-.team-flag {
-    width: 80px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.card-title {
-    font-size: 1.6rem;
-    color: #ffffff;
-    font-weight: 800;
-}
-
-.team-slogan {
-    font-size: 0.95rem;
-    color: #94a3b8;
-    margin-top: 0.2rem;
-}
-
-.score-display {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 7.5rem;
-    font-weight: 900;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 1rem 0;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: color 0.5s ease, text-shadow 0.5s ease, border-color 0.5s ease;
-}
-
-/* ==========================================
-   MODALE D'ADMINISTRATION STYLE MODERNE
-   ========================================== */
-.admin-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(2, 6, 23, 0.9);
-    backdrop-filter: blur(15px);
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0; visibility: hidden;
-    transition: all 0.3s ease;
-}
-
+.admin-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(15px); z-index: 100; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
 .admin-overlay.open { opacity: 1; visibility: visible; }
-
-.admin-box {
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    width: 100%;
-    max-width: 750px;
-    border-radius: 28px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-}
-
-.admin-header {
-    background: #1e293b;
-    padding: 1.5rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top-left-radius: 27px;
-    border-top-right-radius: 27px;
-}
-
+.admin-box { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; max-width: 750px; border-radius: 28px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); }
+.admin-header { background: #1e293b; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top-left-radius: 27px; border-top-right-radius: 27px; }
 .admin-header h2 { color: #ffffff; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
 .btn-close { background: none; border: none; color: #94a3b8; font-size: 2rem; cursor: pointer; }
 .btn-close:hover { color: #ffffff; }
-
-.admin-body { padding: 2rem; }
-
-.admin-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 1.5rem;
-}
-
-.admin-col {
-    background: #1e293b;
-    padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.02);
-}
-
+.admin-body { padding: 2rem; max-height: 85vh; overflow-y: auto; }
+.admin-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+.admin-col { background: #1e293b; padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.02); }
 .admin-col h3 { color: #ffffff; font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;}
-
-.input-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+.input-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; position: relative; }
 .input-group label { color: #94a3b8; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
-.input-group input {
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.7rem 0.9rem;
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 0.95rem;
-    outline: none;
-}
+.input-group input { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); padding: 0.7rem 0.9rem; border-radius: 10px; color: #ffffff; font-size: 0.95rem; outline: none; }
 .input-group input:focus { border-color: #3b82f6; }
-
 .input-group-row { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
 input[type="color"] { height: 43px; padding: 2px; cursor: pointer; width: 100%; }
-
-.btn-save {
-    width: 100%; background: #3b82f6; color: #ffffff; border: none;
-    padding: 1rem; font-weight: 700; font-size: 1rem; border-radius: 12px;
-    cursor: pointer; transition: background 0.2s; margin-top: 2rem;
-}
+.btn-save { width: 100%; background: #3b82f6; color: #ffffff; border: none; padding: 1rem; font-weight: 700; font-size: 1rem; border-radius: 12px; cursor: pointer; transition: background 0.2s; margin-top: 2rem; }
 .btn-save:hover { background: #2563eb; }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
-    .main-scoreboard { padding: 2rem; }
-    #country-slogan { font-size: 1.8rem; }
-    .scores-container, .admin-columns { grid-template-columns: 1fr; gap: 1.5rem; }
-    .admin-box { max-height: 90vh; overflow-y: auto; width: 95%; }
+/* ==========================================
+   BARRE D'OUTILS TEXTE (NOUVEAU)
+   ========================================== */
+.toolbar {
+    display: flex;
+    gap: 0.35rem;
+    position: absolute;
+    right: 5px;
+    top: -2px;
+}
+
+.btn-format {
+    background: #334155;
+    border: none;
+    color: #f8fafc;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-format:hover {
+    background: #475569;
+    color: #3b82f6;
+}
+
+/* ==========================================
+   BLOC D'AIDE MÉMOIRE ADMIN (NOUVEAU)
+   ========================================== */
+.admin-help-box {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-top: 2rem;
+}
+
+.admin-help-box h4 {
+    color: #3b82f6;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.admin-help-box ul {
+    list-index: none;
+    padding-left: 1rem;
+}
+
+.admin-help-box li {
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.admin-help-box code {
+    background: #0f172a;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #f43f5e;
+    font-family: monospace;
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   ANIMATION STYLE HORLOGE NUMÉRIQUE (Flip/Slide Clock)
+   ========================================================================== */
+.digital-clock {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
+    vertical-align: middle;
+}
+
+/* Boîte individuelle pour chaque chiffre */
+.clock-digit {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #f59e0b;
+    background: #020617;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Séparateurs (les espaces ou lettres comme j, h, m, s) */
+.clock-sep {
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #d97706;
+    padding: 0 0.1rem;
+}
+
+/* L'animation de descente du chiffre */
+@keyframes slideDigitDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Classe appliquée par le JS quand un chiffre change */
+.digit-animate {
+    animation: slideDigitDown 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
