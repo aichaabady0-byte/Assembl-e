@@ -142,9 +142,60 @@ function parseCustomTags(text, elementId) {
         return formatTimeLeft(timeLeft, key);
     });
 
+    // RENDU NOUVEAU [startedat:"17/06/2026:22:00"] (Temps écoulé depuis)
+    parsed = parsed.replace(/\[startedat:"(\d{2})\/(\d{2})\/(\d{4}):(\d{2}):(\d{2})"\]/g, (match, j, mo, a, h, mi) => {
+        const key = elementId + match;
+        const startDate = new Date(`${a}-${mo}-${j}T${h}:${mi}:00`);
+        let timeElapsed = Date.now() - startDate.getTime();
+        
+        if (timeElapsed < 0) return "<span style='color:#3b82f6; font-weight:bold;'>PAS COMMENCÉ</span>";
+        
+        return formatTimeElapsed(timeElapsed, key);
+    });
+
     return parsed;
 }
 
+// Générateur HTML pour le temps écoulé (Même effet visuel de glissement)
+function formatTimeElapsed(ms, key) {
+    let totalSecs = Math.floor(ms / 1000);
+    let days = Math.floor(totalSecs / 86400);
+    totalSecs %= 86400;
+    let hours = Math.floor(totalSecs / 3600);
+    totalSecs %= 3600;
+    let mins = Math.floor(totalSecs / 60);
+    let secs = totalSecs % 60;
+
+    let rawString = "";
+    if (days > 0) rawString += String(days).padStart(2, '0') + "j ";
+    if (hours > 0 || days > 0) rawString += String(hours).padStart(2, '0') + "h ";
+    rawString += String(mins).padStart(2, '0') + "m " + String(secs).padStart(2, '0') + "s";
+
+    if (!lastClockHTML[key]) {
+        lastClockHTML[key] = [];
+    }
+
+    let htmlOutput = `<span class="digital-clock" style="border-color: rgba(34, 197, 94, 0.2); box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);">`;
+    
+    for (let i = 0; i < rawString.length; i++) {
+        let char = rawString[i];
+        
+        if (/[0-9]/.test(char)) {
+            let hasChanged = lastClockHTML[key][i] !== char;
+            let animateClass = hasChanged ? "digit-animate" : "";
+            
+            // On lui donne une couleur verte (#22c55e) pour le différencier d'un compte à rebours orange
+            htmlOutput += `<span class="clock-digit" style="color: #22c55e;"><span class="${animateClass}">${char}</span></span>`;
+        } else {
+            htmlOutput += `<span class="clock-sep" style="color: #16a34a;">${char}</span>`;
+        }
+        
+        lastClockHTML[key][i] = char;
+    }
+    
+    htmlOutput += `</span>`;
+    return htmlOutput;
+}
 // Générateur HTML individuel pour animer la descente des chiffres
 function formatTimeLeft(ms, key) {
     let totalSecs = Math.floor(ms / 1000);
