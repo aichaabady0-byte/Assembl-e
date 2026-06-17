@@ -1,5 +1,5 @@
 // ==========================================================================
-// CONFIGURATION & INITIALISATION FIREBASE
+// 1. CONFIGURATION & INITIALISATION FIREBASE
 // ==========================================================================
 const firebaseConfig = {
     apiKey: "AIzaSyAlQBqaDBx1efC89wSEMBMRh6EzRUvaKiU",
@@ -12,7 +12,7 @@ const firebaseConfig = {
     measurementId: "G-NXKQPYMDKE"
 };
 
-// Initialisation via le SDK Compat (Chargé dans index.html)
+// Initialisation via le SDK Compat
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
@@ -21,7 +21,7 @@ let lastClockHTML = {};
 let countdownTargets = {};
 
 // ==========================================================================
-// RACCOURCI CLAVIER : MAINTENIR "c" + TAPER 876421 POUR L'ADMIN
+// 2. RACCOURCI CLAVIER : MAINTENIR "c" + TAPER 876421 POUR L'ADMIN
 // ==========================================================================
 let isCPressed = false;
 let inputSequence = "";
@@ -72,7 +72,7 @@ function openAdminPanel() {
 }
 
 // ==========================================================================
-// BARRE D'OUTILS TEXTE EDITEUR (GRAS / COULEUR)
+// 3. BARRE D'OUTILS TEXTE ÉDITEUR (GRAS / COULEUR)
 // ==========================================================================
 document.querySelectorAll('.btn-format').forEach(button => {
     button.addEventListener('click', () => {
@@ -103,7 +103,7 @@ document.querySelectorAll('.btn-format').forEach(button => {
 });
 
 // ==========================================================================
-// MOTEUR DE RENDU (PARSER) ET EFFET HORLOGE
+// 4. MOTEUR DE RENDU (PARSER DE BALISES CUSTOMS)
 // ==========================================================================
 function parseCustomTags(text, elementId) {
     if (!text) return "";
@@ -152,7 +152,6 @@ function parseCustomTags(text, elementId) {
 
         let isMaxReached = false;
         if (maxH && maxM && maxS) {
-            // Conversion de la limite max (ex: 02:15:00) en millisecondes
             const maxLimitMs = ((parseInt(maxH) * 3600) + (parseInt(maxM) * 60) + parseInt(maxS)) * 1000;
             if (timeElapsed >= maxLimitMs) {
                 timeElapsed = maxLimitMs; // On bloque le chrono au maximum défini
@@ -166,7 +165,44 @@ function parseCustomTags(text, elementId) {
     return parsed;
 }
 
-// Générateur HTML avec prise en compte du blocage au maximum
+// ==========================================================================
+// 5. GÉNÉRATEURS DE RENDU HTML POUR LES HORLOGES NUMÉRIQUES
+// ==========================================================================
+
+// Horloge pour les comptes à rebours (Orange / Rouge)
+function formatTimeLeft(ms, key) {
+    let totalSecs = Math.floor(ms / 1000);
+    let days = Math.floor(totalSecs / 86400);
+    totalSecs %= 86400;
+    let hours = Math.floor(totalSecs / 3600);
+    totalSecs %= 3600;
+    let mins = Math.floor(totalSecs / 60);
+    let secs = totalSecs % 60;
+
+    let rawString = "";
+    if (days > 0) rawString += String(days).padStart(2, '0') + "j ";
+    if (hours > 0 || days > 0) rawString += String(hours).padStart(2, '0') + "h ";
+    rawString += String(mins).padStart(2, '0') + "m " + String(secs).padStart(2, '0') + "s";
+
+    if (!lastClockHTML[key]) lastClockHTML[key] = [];
+
+    let htmlOutput = `<span class="digital-clock">`;
+    for (let i = 0; i < rawString.length; i++) {
+        let char = rawString[i];
+        if (/[0-9]/.test(char)) {
+            let hasChanged = lastClockHTML[key][i] !== char;
+            let animateClass = hasChanged ? "digit-animate" : "";
+            htmlOutput += `<span class="clock-digit"><span class="${animateClass}">${char}</span></span>`;
+        } else {
+            htmlOutput += `<span class="clock-sep">${char}</span>`;
+        }
+        lastClockHTML[key][i] = char;
+    }
+    htmlOutput += `</span>`;
+    return htmlOutput;
+}
+
+// Horloge pour le temps écoulé (Vert / Alerte Rouge si fini)
 function formatTimeElapsed(ms, key, isMaxReached) {
     let totalSecs = Math.floor(ms / 1000);
     let days = Math.floor(totalSecs / 86400);
@@ -181,33 +217,25 @@ function formatTimeElapsed(ms, key, isMaxReached) {
     if (hours > 0 || days > 0) rawString += String(hours).padStart(2, '0') + "h ";
     rawString += String(mins).padStart(2, '0') + "m " + String(secs).padStart(2, '0') + "s";
 
-    if (!lastClockHTML[key]) {
-        lastClockHTML[key] = [];
-    }
+    if (!lastClockHTML[key]) lastClockHTML[key] = [];
 
-    // Changement de style si le temps maximum est atteint (Affiche une lueur rouge/orange au lieu de verte)
     let borderColor = isMaxReached ? "rgba(239, 68, 68, 0.4)" : "rgba(34, 197, 94, 0.2)";
     let boxShadow = isMaxReached ? "0 0 15px rgba(239, 68, 68, 0.2)" : "0 0 15px rgba(34, 197, 94, 0.1)";
     let digitColor = isMaxReached ? "#f43f5e" : "#22c55e";
     let sepColor = isMaxReached ? "#e11d48" : "#16a34a";
 
     let htmlOutput = `<span class="digital-clock" style="border-color: ${borderColor}; box-shadow: ${boxShadow};">`;
-    
     for (let i = 0; i < rawString.length; i++) {
         let char = rawString[i];
-        
         if (/[0-9]/.test(char)) {
             let hasChanged = lastClockHTML[key][i] !== char;
             let animateClass = (hasChanged && !isMaxReached) ? "digit-animate" : "";
-            
             htmlOutput += `<span class="clock-digit" style="color: ${digitColor};"><span class="${animateClass}">${char}</span></span>`;
         } else {
             htmlOutput += `<span class="clock-sep" style="color: ${sepColor};">${char}</span>`;
         }
-        
         lastClockHTML[key][i] = char;
     }
-    
     htmlOutput += `</span>`;
 
     if (isMaxReached) {
@@ -216,9 +244,55 @@ function formatTimeElapsed(ms, key, isMaxReached) {
 
     return htmlOutput;
 }
+
+// ==========================================================================
+// 6. BOUCLE DE RENDU LIVE & SYNCHRO FIREBASE
+// ==========================================================================
+function updateDisplay() {
+    if (!currentRawData) return;
+
+    // Synchronisation en direct du titre de l'onglet du navigateur
+    const s1 = currentRawData.team1?.score || 0;
+    const s2 = currentRawData.team2?.score || 0;
+    document.title = `[${s1} - ${s2}] FIFA 26 - Match Live`;
+
+    if (currentRawData.countrySlogan) {
+        document.getElementById("country-slogan").innerHTML = parseCustomTags(currentRawData.countrySlogan, "country-slogan");
+    }
+
+    if (currentRawData.team1) {
+        document.getElementById("name-1").innerHTML = parseCustomTags(currentRawData.team1.name, "name-1");
+        document.getElementById("slogan-1").innerHTML = parseCustomTags(currentRawData.team1.slogan, "slogan-1");
+        document.getElementById("flag-1").src = currentRawData.team1.flagUrl || "https://flagcdn.com/w320/un.png";
+        document.getElementById("score-1").innerText = String(currentRawData.team1.score).padStart(2, '0');
+        
+        const color1 = currentRawData.team1.color || "#3b82f6";
+        document.getElementById("score-1").style.color = color1;
+        document.getElementById("score-1").style.borderColor = color1 + "40";
+        document.getElementById("score-1").style.textShadow = `0 0 25px ${color1}`;
+        document.getElementById("card-1").style.borderColor = color1 + "20";
+    }
+
+    if (currentRawData.team2) {
+        document.getElementById("name-2").innerHTML = parseCustomTags(currentRawData.team2.name, "name-2");
+        document.getElementById("slogan-2").innerHTML = parseCustomTags(currentRawData.team2.slogan, "slogan-2");
+        document.getElementById("flag-2").src = currentRawData.team2.flagUrl || "https://flagcdn.com/w320/un.png";
+        document.getElementById("score-2").innerText = String(currentRawData.team2.score).padStart(2, '0');
+        
+        const color2 = currentRawData.team2.color || "#ef4444";
+        document.getElementById("score-2").style.color = color2;
+        document.getElementById("score-2").style.borderColor = color2 + "40";
+        document.getElementById("score-2").style.textShadow = `0 0 25px ${color2}`;
+        document.getElementById("card-2").style.borderColor = color2 + "20";
+    }
+}
+
+// Boucle 1 FPS pour l'animation continue des secondes
+setInterval(updateDisplay, 1000);
+
 // Envoi des données vers Realtime Database
 document.getElementById("save-admin-btn").addEventListener("click", () => {
-    countdownTargets = {}; // Réinitialise les timestamps éphémères locaux
+    countdownTargets = {}; // Reset des timers locaux éphémères
 
     const tableData = {
         countrySlogan: document.getElementById("input-slogan-country").value,
@@ -243,7 +317,7 @@ document.getElementById("save-admin-btn").addEventListener("click", () => {
         .catch(err => alert("Erreur Firebase : " + err.message));
 });
 
-// Écoute des mises à jour Firebase en direct
+// Écoute des modifications Firebase
 database.ref("customScoreboard").on("value", (snapshot) => {
     currentRawData = snapshot.val();
     updateDisplay();
