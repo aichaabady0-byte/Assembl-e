@@ -11,12 +11,11 @@ const firebaseConfig = {
     appId: "1:19180021045:web:8f1e61cd43d7900f1a187c"
 };
 
-// Initialisation de Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 // ==========================================================================
-// SÉCURITÉ : CODE ADMIN INVISIBLE ("c" maintenu + 876421)
+// DETECTEUR CLAVIER UNIQUE ("c" + 876421)
 // ==========================================================================
 let isCPressed = false;
 let inputSequence = "";
@@ -25,95 +24,111 @@ const targetCode = "876421";
 const adminModal = document.getElementById("admin-modal");
 const closeAdmin = document.getElementById("close-admin");
 
-// Écoute des touches enfoncées
 window.addEventListener("keydown", (e) => {
-    if (e.key.toLowerCase() === "c") {
-        isCPressed = true;
-    }
+    if (e.key.toLowerCase() === "c") isCPressed = true;
 
-    // Si la touche "c" est active et qu'on tape des chiffres
     if (isCPressed && /[0-9]/.test(e.key)) {
         inputSequence += e.key;
-
-        // Si le code tapé correspond à la cible
         if (inputSequence === targetCode) {
             openAdminPanel();
-            inputSequence = ""; // reset la saisie
-        }
-        
-        // Anti-bug : évite d'accumuler une suite infinie si on se trompe
-        if (inputSequence.length > targetCode.length) {
             inputSequence = "";
         }
+        if (inputSequence.length > targetCode.length) inputSequence = "";
     }
 });
 
-// Quand on relâche les touches
 window.addEventListener("keyup", (e) => {
     if (e.key.toLowerCase() === "c") {
         isCPressed = false;
-        inputSequence = ""; // Annule la séquence si on lâche C
+        inputSequence = "";
     }
 });
 
-// Fermeture de la modale
-closeAdmin.addEventListener("click", () => {
-    adminModal.classList.remove("open");
-});
+closeAdmin.addEventListener("click", () => adminModal.classList.remove("open"));
 
+// Charger les valeurs actuelles dans le formulaire au moment de l'ouverture
 function openAdminPanel() {
     adminModal.classList.add("open");
     
-    // On pré-remplit les inputs de la modale avec les valeurs actuelles du tableau
-    document.getElementById("input-slogan").value = document.getElementById("country-slogan").innerText;
-    document.getElementById("input-flag").value = document.getElementById("country-flag").src;
+    document.getElementById("input-slogan-country").value = document.getElementById("country-slogan").innerText;
+    
+    // Équipe 1
+    document.getElementById("input-name-1").value = document.getElementById("name-1").innerText;
+    document.getElementById("input-slogan-1").value = document.getElementById("slogan-1").innerText;
+    document.getElementById("input-flag-1").value = document.getElementById("flag-1").src;
     document.getElementById("input-score-1").value = parseInt(document.getElementById("score-1").innerText);
+    
+    // Équipe 2
+    document.getElementById("input-name-2").value = document.getElementById("name-2").innerText;
+    document.getElementById("input-slogan-2").value = document.getElementById("slogan-2").innerText;
+    document.getElementById("input-flag-2").value = document.getElementById("flag-2").src;
     document.getElementById("input-score-2").value = parseInt(document.getElementById("score-2").innerText);
 }
 
 // ==========================================================================
-// SYNC FIREBASE : ENVOI DES DONNÉES (ADMIN)
+// SENSE UNIQUE : ENVOI DU CONFIGURATEUR VERS FIREBASE
 // ==========================================================================
-const saveBtn = document.getElementById("save-admin-btn");
+document.getElementById("save-admin-btn").addEventListener("click", () => {
+    const tableData = {
+        countrySlogan: document.getElementById("input-slogan-country").value,
+        team1: {
+            name: document.getElementById("input-name-1").value,
+            slogan: document.getElementById("input-slogan-1").value,
+            flagUrl: document.getElementById("input-flag-1").value,
+            score: parseInt(document.getElementById("input-score-1").value) || 0,
+            color: document.getElementById("input-color-1").value
+        },
+        team2: {
+            name: document.getElementById("input-name-2").value,
+            slogan: document.getElementById("input-slogan-2").value,
+            flagUrl: document.getElementById("input-flag-2").value,
+            score: parseInt(document.getElementById("input-score-2").value) || 0,
+            color: document.getElementById("input-color-2").value
+        }
+    };
 
-saveBtn.addEventListener("click", () => {
-    const sloganValue = document.getElementById("input-slogan").value;
-    const flagValue = document.getElementById("input-flag").value;
-    const score1Value = parseInt(document.getElementById("input-score-1").value) || 0;
-    const score2Value = parseInt(document.getElementById("input-score-2").value) || 0;
-
-    // Envoi à la racine de la Realtime Database
-    database.ref("scoreboard").set({
-        slogan: sloganValue,
-        flagUrl: flagValue,
-        score1: score1Value,
-        score2: score2Value
-    }).then(() => {
-        // Ferme la modale une fois enregistré
-        adminModal.classList.remove("open");
-    }).catch((error) => {
-        alert("Erreur Firebase : " + error.message);
-    });
+    database.ref("customScoreboard").set(tableData)
+        .then(() => adminModal.classList.remove("open"))
+        .catch(err => alert("Erreur de sauvegarde : " + err.message));
 });
 
 // ==========================================================================
-// SYNC FIREBASE : RÉCEPTION EN TEMPS RÉEL (TOUT LE MONDE)
+// SENSE DUPLEX : EN TEMPS RÉEL DEPUIS FIREBASE VERS L'ÉCRAN
 // ==========================================================================
-// Cette fonction écoute Firebase en permanence. Dès qu'un admin change une valeur,
-// l'écran se met à jour instantanément chez TOUS les utilisateurs connectés.
-database.ref("scoreboard").on("value", (snapshot) => {
+database.ref("customScoreboard").on("value", (snapshot) => {
     const data = snapshot.val();
-    
-    if (data) {
-        if (data.slogan) document.getElementById("country-slogan").innerText = data.slogan;
-        if (data.flagUrl) document.getElementById("country-flag").src = data.flagUrl;
+    if (!data) return;
+
+    // Slogan Global
+    if (data.countrySlogan) document.getElementById("country-slogan").innerText = data.countrySlogan;
+
+    // Sync Équipe 1
+    if (data.team1) {
+        document.getElementById("name-1").innerText = data.team1.name || "Équipe 1";
+        document.getElementById("slogan-1").innerText = data.team1.slogan || "";
+        document.getElementById("flag-1").src = data.team1.flagUrl || "https://flagcdn.com/w320/un.png";
+        document.getElementById("score-1").innerText = String(data.team1.score).padStart(2, '0');
         
-        // Formatage des scores pour toujours avoir 2 chiffres (Ex: 04 au lieu de 4)
-        if (data.score1 !== undefined) {
-            document.getElementById("score-1").innerText = String(data.score1).padStart(2, '0');
-        }
-        if (data.score2 !== undefined) {
-            document.getElementById("score-2").innerText = String(data.score2).padStart(2, '0');
-        }
+        // Application dynamique de la couleur choisie par l'admin
+        const color1 = data.team1.color || "#3b82f6";
+        document.getElementById("score-1").style.color = color1;
+        document.getElementById("score-1").style.borderColor = color1 + "40"; // Ajoute de la transparence pour la bordure
+        document.getElementById("score-1").style.textShadow = `0 0 25px ${color1}`;
+        document.getElementById("card-1").style.borderColor = color1 + "20";
+    }
+
+    // Sync Équipe 2
+    if (data.team2) {
+        document.getElementById("name-2").innerText = data.team2.name || "Équipe 2";
+        document.getElementById("slogan-2").innerText = data.team2.slogan || "";
+        document.getElementById("flag-2").src = data.team2.flagUrl || "https://flagcdn.com/w320/un.png";
+        document.getElementById("score-2").innerText = String(data.team2.score).padStart(2, '0');
+        
+        // Application dynamique de la couleur choisie par l'admin
+        const color2 = data.team2.color || "#ef4444";
+        document.getElementById("score-2").style.color = color2;
+        document.getElementById("score-2").style.borderColor = color2 + "40";
+        document.getElementById("score-2").style.textShadow = `0 0 25px ${color2}`;
+        document.getElementById("card-2").style.borderColor = color2 + "20";
     }
 });
