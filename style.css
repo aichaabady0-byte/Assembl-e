@@ -189,3 +189,105 @@ input[type="color"] { height: 43px; padding: 2px; cursor: pointer; width: 100%; 
 .digit-animate {
     animation: slideDigitDown 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
+/* ==========================================
+   ADAPTATION MOBILE & TABLETTE (RESPONSIVE)
+   ========================================== */
+@media (max-width: 992px) {
+    .main-scoreboard {
+        padding: 2rem;
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+
+    #country-slogan {
+        font-size: 1.8rem;
+    }
+
+    .scores-container {
+        grid-template-columns: 1fr; /* Les deux équipes passent l'une sous l'autre */
+        gap: 1.5rem;
+    }
+
+    .score-card {
+        padding: 1.5rem;
+    }
+
+    .score-display {
+        font-size: 5rem; /* On rétrécit un peu les scores pour éviter qu'ils dépassent */
+        padding: 0.5rem 0;
+    }
+    
+    .digital-clock {
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .clock-digit {
+        width: 18px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        align-items: flex-start; /* Permet de scroller vers le bas si le contenu est trop grand */
+        overflow-y: auto; 
+        padding: 1rem 0;
+    }
+
+    .main-scoreboard {
+        padding: 1.25rem;
+        border-radius: 20px;
+    }
+
+    #country-slogan {
+        font-size: 1.4rem;
+    }
+
+    .team-header {
+        flex-direction: column; /* Le drapeau passe au-dessus du nom de l'équipe */
+        text-align: center;
+        gap: 0.75rem;
+    }
+
+    .team-flag {
+        width: 70px;
+        height: 44px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+    }
+
+    /* Ajustements pour le Panneau Admin sur Téléphone */
+    .admin-box {
+        width: 95%;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .admin-body {
+        padding: 1.25rem;
+        overflow-y: auto; /* Scroll interne indispensable sur mobile */
+    }
+
+    .admin-columns {
+        grid-template-columns: 1fr; /* L'édition des deux équipes passe sur une seule colonne */
+        gap: 1.25rem;
+    }
+
+    .admin-col {
+        padding: 1rem;
+    }
+
+    .input-group-row {
+        grid-template-columns: 1fr; /* Points et couleur l'un sous l'autre */
+        gap: 0.75rem;
+    }
+    
+    .toolbar {
+        top: -5px; /* Recale la barre d'outils de texte */
+    }
+}
