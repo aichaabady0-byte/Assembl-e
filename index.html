@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tableau Officiel - RP</title>
+  <title>Tableau de Score Personnalisable - RP</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,58 +16,109 @@
 
   <div class="main-scoreboard">
     <div class="board-header">
-      <img id="country-flag" src="https://flagcdn.com/w320/fr.png" alt="Drapeau">
       <div class="country-info">
-        <h1 id="country-slogan">Liberté, Égalité, Fraternité</h1>
-        <p class="board-subtitle">République Démocratique RP</p>
+        <p class="board-subtitle">Gouvernement National RP</p>
+        <h1 id="country-slogan">Chargement du slogan...</h1>
       </div>
     </div>
 
     <hr class="board-divider">
 
     <div class="scores-container">
-      <div class="score-card">
-        <h2 class="card-title">Majorité Présidentielle</h2>
+      
+      <div id="card-1" class="score-card">
+        <div class="team-header">
+          <img id="flag-1" src="" alt="Drapeau Équipe 1" class="team-flag">
+          <div>
+            <h2 id="name-1" class="card-title">Équipe 1</h2>
+            <p id="slogan-1" class="team-slogan">Slogan Équipe 1</p>
+          </div>
+        </div>
         <div id="score-1" class="score-display">00</div>
       </div>
 
-      <div class="score-card">
-        <h2 class="card-title">Opposition Nationale</h2>
+      <div id="card-2" class="score-card">
+        <div class="team-header">
+          <img id="flag-2" src="" alt="Drapeau Équipe 2" class="team-flag">
+          <div>
+            <h2 id="name-2" class="card-title">Équipe 2</h2>
+            <p id="slogan-2" class="team-slogan">Slogan Équipe 2</p>
+          </div>
+        </div>
         <div id="score-2" class="score-display">00</div>
       </div>
+
     </div>
   </div>
 
   <div id="admin-modal" class="admin-overlay">
     <div class="admin-box">
       <div class="admin-header">
-        <h2><i class="ri-settings-4-line"></i> Panneau d'Administration</h2>
+        <h2><i class="ri-settings-4-line"></i> Configuration du Tableau</h2>
         <button id="close-admin" class="btn-close">&times;</button>
       </div>
       
       <div class="admin-body">
         <div class="input-group">
-          <label>Slogan du Pays</label>
-          <input type="text" id="input-slogan" placeholder="Ex: Liberté, Égalité, Fraternité">
+          <label>Slogan Principal du Pays</label>
+          <input type="text" id="input-slogan-country">
         </div>
 
-        <div class="input-group">
-          <label>URL du Drapeau (Image)</label>
-          <input type="url" id="input-flag" placeholder="https://lien-de-mon-image.png">
-        </div>
-
-        <div class="admin-scores-row">
-          <div class="input-group">
-            <label>Points Majorité</label>
-            <input type="number" id="input-score-1" value="0">
+        <div class="admin-columns">
+          <div class="admin-col">
+            <h3>Équipe 1</h3>
+            <div class="input-group">
+              <label>Nom</label>
+              <input type="text" id="input-name-1">
+            </div>
+            <div class="input-group">
+              <label>Slogan de l'Équipe</label>
+              <input type="text" id="input-slogan-1">
+            </div>
+            <div class="input-group">
+              <label>URL Drapeau / Image</label>
+              <input type="url" id="input-flag-1">
+            </div>
+            <div class="input-group-row">
+              <div class="input-group">
+                <label>Points</label>
+                <input type="number" id="input-score-1">
+              </div>
+              <div class="input-group">
+                <label>Couleur</label>
+                <input type="color" id="input-color-1" value="#3b82f6">
+              </div>
+            </div>
           </div>
-          <div class="input-group">
-            <label>Points Opposition</label>
-            <input type="number" id="input-score-2" value="0">
+
+          <div class="admin-col">
+            <h3>Équipe 2</h3>
+            <div class="input-group">
+              <label>Nom</label>
+              <input type="text" id="input-name-2">
+            </div>
+            <div class="input-group">
+              <label>Slogan de l'Équipe</label>
+              <input type="text" id="input-slogan-2">
+            </div>
+            <div class="input-group">
+              <label>URL Drapeau / Image</label>
+              <input type="url" id="input-flag-2">
+            </div>
+            <div class="input-group-row">
+              <div class="input-group">
+                <label>Points</label>
+                <input type="number" id="input-score-2">
+              </div>
+              <div class="input-group">
+                <label>Couleur</label>
+                <input type="color" id="input-color-2" value="#ef4444">
+              </div>
+            </div>
           </div>
         </div>
 
-        <button id="save-admin-btn" class="btn-save">Mettre à jour Firebase</button>
+        <button id="save-admin-btn" class="btn-save">Mettre à jour le Tableau</button>
       </div>
     </div>
   </div>
