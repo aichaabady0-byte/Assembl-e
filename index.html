@@ -4,21 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <link rel="icon" type="image/jpeg" href="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel__1_-removebg-preview.png">
+  <link rel="icon" type="image/jpeg" href="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel.jpg">
   
   <title>FIFA 26 - Live Stats</title>
   
-  <!-- CONFIGURATION DU LIEN DE PARTAGE (Open Graph / Discord / WhatsApp / SMS) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="FIFA 26 - Tableau des Scores RP">
   <meta property="og:description" content="Suis l'évolution du match et des stats de la Constitution RP en direct avec intégration de timers réels !">
   <meta property="og:image" content="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel.jpg">
-  
-  <!-- Meta additionnelles pour Twitter/Discord -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#0f172a"> <!-- Couleur de l'entête sur mobile et Discord -->
+  <meta name="theme-color" content="#0f172a">
 
-  <!-- Polices et Icônes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -28,162 +24,173 @@
 </head>
 <body>
 
-  <!-- ==========================================
-       LE GRAND PANNEAU CENTRAL
-       ========================================== -->
-  <div class="main-scoreboard">
-    <div class="board-header">
-      <!-- Logo officiel FIFA 2026 -->
-      <div class="logo-container">
-        <img src="68b7989efb1649d79c3f9e9ee7b76a75-removebg-preview (1).png" alt="Logo FIFA World Cup 2026" class="fifa-logo">
+  <div class="page-container">
+
+    <div id="live-scoreboard-box" class="main-scoreboard">
+      
+      <div id="no-match-state" class="no-match-message hidden">
+        <i class="ri-pulse-line"></i>
+        <h2>Aucun Match Disponible</h2>
+        <p>Aucune rencontre n'est diffusée pour le moment. Attends le lancement du prochain match par la régie !</p>
       </div>
-      <div class="country-info">
-        <p class="board-subtitle">FIFA 26</p>
-        <h1 id="country-slogan">Chargement...</h1>
+
+      <div id="active-match-state">
+        <div class="board-header">
+          <div class="logo-container">
+            <img src="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel.jpg" alt="Logo FIFA World Cup 2026" class="fifa-logo">
+          </div>
+          <div class="country-info">
+            <p class="board-subtitle">FIFA 26 — En Direct</p>
+            <h1 id="country-slogan">Chargement...</h1>
+          </div>
+        </div>
+
+        <hr class="board-divider">
+
+        <div class="scores-container">
+          <div id="card-1" class="score-card">
+            <div class="team-header">
+              <img id="flag-1" src="" alt="Drapeau" class="team-flag">
+              <div>
+                <h2 id="name-1" class="card-title">Équipe 1</h2>
+                <p id="slogan-1" class="team-slogan">Slogan Équipe 1</p>
+              </div>
+            </div>
+            <div id="score-1" class="score-display">00</div>
+          </div>
+
+          <div id="card-2" class="score-card">
+            <div class="team-header">
+              <img id="flag-2" src="" alt="Drapeau" class="team-flag">
+              <div>
+                <h2 id="name-2" class="card-title">Équipe 2</h2>
+                <p id="slogan-2" class="team-slogan">Slogan Équipe 2</p>
+              </div>
+            </div>
+            <div id="score-2" class="score-display">00</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="archive-section">
+      <div class="archive-title">
+        <i class="ri-history-line"></i>
+        <h2>Historique des Matchs Archivés</h2>
+      </div>
+      <div id="archive-list" class="archive-grid">
+        <p class="no-archives">Aucun match archivé dans la base de données.</p>
       </div>
     </div>
 
-    <hr class="board-divider">
-
-    <div class="scores-container">
-      <!-- ÉQUIPE 1 -->
-      <div id="card-1" class="score-card">
-        <div class="team-header">
-          <img id="flag-1" src="" alt="Drapeau Équipe 1" class="team-flag">
-          <div>
-            <h2 id="name-1" class="card-title">Équipe 1</h2>
-            <p id="slogan-1" class="team-slogan">Slogan Équipe 1</p>
-          </div>
-        </div>
-        <div id="score-1" class="score-display">00</div>
-      </div>
-
-      <!-- ÉQUIPE 2 -->
-      <div id="card-2" class="score-card">
-        <div class="team-header">
-          <img id="flag-2" src="" alt="Drapeau Équipe 2" class="team-flag">
-          <div>
-            <h2 id="name-2" class="card-title">Équipe 2</h2>
-            <p id="slogan-2" class="team-slogan">Slogan Équipe 2</p>
-          </div>
-        </div>
-        <div id="score-2" class="score-display">00</div>
-      </div>
-    </div>
   </div>
 
-  <!-- ==========================================
-       PANNEAU ADMIN CACHÉ (MODALE)
-       ========================================== -->
   <div id="admin-modal" class="admin-overlay">
     <div class="admin-box">
       <div class="admin-header">
-        <h2><i class="ri-settings-4-line"></i> Configuration Avancée</h2>
+        <h2><i class="ri-settings-5-line"></i> Console de Gestion Arbitrage</h2>
         <button id="close-admin" class="btn-close">&times;</button>
       </div>
       
       <div class="admin-body">
-        <!-- Slogan National -->
-        <div class="input-group">
-          <label>Slogan Principal du Pays</label>
-          <div class="toolbar" data-target="input-slogan-country">
-            <button type="button" class="btn-format" data-type="bold" title="Gras"><i class="ri-bold"></i></button>
-            <button type="button" class="btn-format" data-type="color" title="Couleur"><i class="ri-font-color"></i></button>
+        <div class="admin-status-bar">
+          <div class="status-control">
+            <label for="input-match-active">Diffuser le match sur l'écran principal :</label>
+            <select id="input-match-active" class="select-status">
+              <option value="true">Actif (Afficher le match et le chrono)</option>
+              <option value="false">Inactif (Afficher "Aucun Match Disponible")</option>
+            </select>
           </div>
-          <input type="text" id="input-slogan-country">
+          <button id="btn-archive-now" class="btn-archive-trigger" title="Ferme le match en cours et le sauvegarde dans les archives du bas">
+            <i class="ri-archive-drawer-line"></i> Terminer & Archiver le Match
+          </button>
+        </div>
+
+        <div class="input-group" style="margin-top: 1rem;">
+          <label>Slogan Principal / Chronomètre du Match</label>
+          <div class="toolbar" data-target="input-slogan-country">
+            <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
+            <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+          </div>
+          <input type="text" id="input-slogan-country" placeholder='Ex: [startedat:"17/06/2026:22:00" max:"01:30:00"]'>
+        </div>
+
+        <div class="input-group">
+          <label>Durée finale affichée dans l'archive (ex: 90min, 2h15, etc.)</label>
+          <input type="text" id="input-archive-duration" placeholder="Ex: 90:00 ou 2h15">
         </div>
 
         <div class="admin-columns">
-          <!-- Équipe 1 -->
           <div class="admin-col">
-            <h3>Équipe 1</h3>
+            <h3>Équipe Émettrice (Gauche)</h3>
             <div class="input-group">
               <label>Nom</label>
-              <div class="toolbar" data-target="input-name-1">
-                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
-                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
-              </div>
+              <div class="toolbar" data-target="input-name-1"><button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button></div>
               <input type="text" id="input-name-1">
             </div>
             <div class="input-group">
               <label>Slogan de l'Équipe</label>
-              <div class="toolbar" data-target="input-slogan-1">
-                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
-                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
-              </div>
               <input type="text" id="input-slogan-1">
             </div>
             <div class="input-group">
-              <label>URL Drapeau / Image</label>
+              <label>URL Drapeau</label>
               <input type="url" id="input-flag-1">
             </div>
             <div class="input-group-row">
               <div class="input-group">
-                <label>Points</label>
+                <label>Buts / Score</label>
                 <input type="number" id="input-score-1">
               </div>
               <div class="input-group">
-                <label>Couleur</label>
+                <label>Couleur Thème</label>
                 <input type="color" id="input-color-1" value="#3b82f6">
               </div>
             </div>
           </div>
 
-          <!-- Équipe 2 -->
           <div class="admin-col">
-            <h3>Équipe 2</h3>
+            <h3>Équipe Réceptrice (Droite)</h3>
             <div class="input-group">
               <label>Nom</label>
-              <div class="toolbar" data-target="input-name-2">
-                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
-                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
-              </div>
+              <div class="toolbar" data-target="input-name-2"><button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button></div>
               <input type="text" id="input-name-2">
             </div>
             <div class="input-group">
               <label>Slogan de l'Équipe</label>
-              <div class="toolbar" data-target="input-slogan-2">
-                <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
-                <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
-              </div>
               <input type="text" id="input-slogan-2">
             </div>
             <div class="input-group">
-              <label>URL Drapeau / Image</label>
+              <label>URL Drapeau</label>
               <input type="url" id="input-flag-2">
             </div>
             <div class="input-group-row">
               <div class="input-group">
-                <label>Points</label>
+                <label>Buts / Score</label>
                 <input type="number" id="input-score-2">
               </div>
               <div class="input-group">
-                <label>Couleur</label>
+                <label>Couleur Thème</label>
                 <input type="color" id="input-color-2" value="#ef4444">
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ==========================================
-             INSTRUCTIONS / AIDE-MÉMOIRE
-             ========================================== -->
         <div class="admin-help-box">
-          <h4><i class="ri-information-line"></i> Aide-mémoire des codes magiques :</h4>
+          <h4><i class="ri-information-line"></i> Syntaxes de chronométrage :</h4>
           <ul>
-            <li><strong>Mise en forme :</strong> Sélectionne un texte et clique sur <i class="ri-bold"></i> ou <i class="ri-font-color"></i> pour formater rapidement.</li>
-            <li><strong>Compte à rebours dynamique :</strong> <code>[countdown:"20mi"]</code> (ou <code>s</code>, <code>h</code>, <code>j</code>). <br><small>Exemple : Fin dans [countdown:"15mi"]</small></li>
-            <li><strong>Chrono jusqu'à une date :</strong> <code>[timer:"JJ/MM/AAAA:HH:MM"]</code> <br><small>Exemple : Fin de session [timer:"17/06/2026:22:00"]</small></li>
-            <li><strong>Temps écoulé depuis une date :</strong> <code>[startedat:"JJ/MM/AAAA:HH:MM"]</code> <br><small>Exemple : Match lancé depuis [startedat:"17/06/2026:22:00"]</small></li>
+            <li><strong>Compte à rebours :</strong> <code>[countdown:"45mi"]</code></li>
+            <li><strong>Chrono vers Date fixe :</strong> <code>[timer:"17/06/2026:22:00"]</code></li>
+            <li><strong>Match en direct avec limite :</strong> <code>[startedat:"17/06/2026:22:00" max:"01:30:00"]</code></li>
           </ul>
         </div>
 
-        <button id="save-admin-btn" class="btn-save">Mettre à jour le Tableau</button>
+        <button id="save-admin-btn" class="btn-save">Enregistrer et Mettre à jour</button>
       </div>
     </div>
   </div>
 
-  <!-- SDK Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   
