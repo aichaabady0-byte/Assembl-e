@@ -201,11 +201,21 @@ body::before {
 .archive-flag { width: 36px; height: 22px; object-fit: cover; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
 .archive-team-name { font-size: 0.95rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Score central diamant */
 .archive-score-center {
-    font-family: var(--font-clock); font-size: 1.4rem; font-weight: 900; color: #ffffff;
-    background: #05080f; padding: 0.3rem 0.75rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); position: relative; z-index: 1; min-width: 65px; text-align: center;
+    font-family: var(--font-clock);
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #ffffff;
+    background: #05080f;
+    padding: 0.4rem 1.2rem; /* Plus d'espace interne horizontal */
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 1;
+    min-width: 90px; /* Élargi pour éviter le bug de l'image image_d50ce4.png */
+    text-align: center;
+    white-space: nowrap; /* Empêche le score de sauter une ligne */
 }
 
 /* ==========================================================================
