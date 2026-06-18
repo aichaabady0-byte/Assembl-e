@@ -3,21 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link rel="icon" type="image/jpeg" href="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel__1_-removebg-preview.png">
-  
-  <title>FIFA 26 - Live Stats</title>
-  
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="FIFA 26 - Tableau des Scores RP">
-  <meta property="og:description" content="Suis l'évolution du match et des stats de la Constitution RP en direct avec intégration de timers réels !">
-  <meta property="og:image" content="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" type="image/jpeg" href="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel.jpg">
+  <title>FIFA 26 - Régie Live</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
@@ -29,45 +20,61 @@
     <div id="live-scoreboard-box" class="main-scoreboard">
       
       <div id="no-match-state" class="no-match-message hidden">
-        <i class="ri-pulse-line"></i>
+        <div class="radar-pulse">
+          <i class="ri-broadcast-line"></i>
+        </div>
         <h2>Aucun Match Disponible</h2>
-        <p>Aucune rencontre n'est diffusée pour le moment. Attends le lancement du prochain match par la régie !</p>
+        <p>La régie est actuellement en attente. Restez connectés pour le prochain coup d'envoi.</p>
       </div>
 
       <div id="active-match-state">
         <div class="board-header">
+          <div class="live-badge-container">
+            <span class="live-indicator"><span class="pulse-dot"></span> LIVE</span>
+          </div>
           <div class="logo-container">
-            <img src="68b7989efb1649d79c3f9e9ee7b76a75-removebg-preview (1).png" alt="Logo FIFA World Cup 2026" class="fifa-logo">
+            <img src="73297126-officiel-silhouette-logo-fifa-monde-tasse-2026-dans-etats-unis-canada-et-mexique-illustration-editorial-utilisation-seulement-gratuit-vectoriel.jpg" alt="Logo FIFA" class="fifa-logo">
           </div>
           <div class="country-info">
-            <p class="board-subtitle">FIFA 26 — En Direct</p>
             <h1 id="country-slogan">Chargement...</h1>
           </div>
         </div>
 
-        <hr class="board-divider">
-
         <div class="scores-container">
-          <div id="card-1" class="score-card">
+          <div id="card-1" class="score-card team-left">
             <div class="team-header">
-              <img id="flag-1" src="" alt="Drapeau" class="team-flag">
-              <div>
+              <div class="flag-wrapper">
+                <img id="flag-1" src="" alt="Drapeau" class="team-flag">
+              </div>
+              <div class="team-meta">
                 <h2 id="name-1" class="card-title">Équipe 1</h2>
-                <p id="slogan-1" class="team-slogan">Slogan Équipe 1</p>
+                <p id="slogan-1" class="team-slogan">Slogan 1</p>
               </div>
             </div>
-            <div id="score-1" class="score-display">00</div>
+            <div class="display-wrapper">
+              <div id="score-1" class="score-display">00</div>
+            </div>
           </div>
 
-          <div id="card-2" class="score-card">
+          <div class="vs-divider-center">
+            <div class="vs-line"></div>
+            <div class="vs-glow-text">VS</div>
+            <div class="vs-line"></div>
+          </div>
+
+          <div id="card-2" class="score-card team-right">
             <div class="team-header">
-              <img id="flag-2" src="" alt="Drapeau" class="team-flag">
-              <div>
+              <div class="flag-wrapper">
+                <img id="flag-2" src="" alt="Drapeau" class="team-flag">
+              </div>
+              <div class="team-meta">
                 <h2 id="name-2" class="card-title">Équipe 2</h2>
-                <p id="slogan-2" class="team-slogan">Slogan Équipe 2</p>
+                <p id="slogan-2" class="team-slogan">Slogan 2</p>
               </div>
             </div>
-            <div id="score-2" class="score-display">00</div>
+            <div class="display-wrapper">
+              <div id="score-2" class="score-display">00</div>
+            </div>
           </div>
         </div>
       </div>
@@ -75,12 +82,16 @@
     </div>
 
     <div class="archive-section">
-      <div class="archive-title">
-        <i class="ri-history-line"></i>
-        <h2>Historique des Matchs Archivés</h2>
+      <div class="archive-title-container">
+        <div class="title-left">
+          <i class="ri-history-line"></i>
+          <h2>Archives & Rétrospectives</h2>
+        </div>
+        <div class="title-line"></div>
       </div>
+      
       <div id="archive-list" class="archive-grid">
-        <p class="no-archives">Aucun match archivé dans la base de données.</p>
+        <p class="no-archives">Aucune rencontre archivée pour le moment.</p>
       </div>
     </div>
 
@@ -89,111 +100,101 @@
   <div id="admin-modal" class="admin-overlay">
     <div class="admin-box">
       <div class="admin-header">
-        <h2><i class="ri-settings-5-line"></i> Console de Gestion Arbitrage</h2>
+        <h2><i class="ri-equalizer-line"></i> Configuration du Flux de Match</h2>
         <button id="close-admin" class="btn-close">&times;</button>
       </div>
       
       <div class="admin-body">
         <div class="admin-status-bar">
           <div class="status-control">
-            <label for="input-match-active">Diffuser le match sur l'écran principal :</label>
+            <label>Statut de l'antenne :</label>
             <select id="input-match-active" class="select-status">
-              <option value="true">Actif (Afficher le match et le chrono)</option>
-              <option value="false">Inactif (Afficher "Aucun Match Disponible")</option>
+              <option value="true">Diffuser le match (En Direct)</option>
+              <option value="false">Couper l'affichage (Aucun Match)</option>
             </select>
           </div>
-          <button id="btn-archive-now" class="btn-archive-trigger" title="Ferme le match en cours et le sauvegarde dans les archives du bas">
-            <i class="ri-archive-drawer-line"></i> Terminer & Archiver le Match
+          <button id="btn-archive-now" class="btn-archive-trigger">
+            <i class="ri-archive-stack-line"></i> Archiver le Match Actuel
           </button>
         </div>
 
-        <div class="input-group" style="margin-top: 1rem;">
-          <label>Slogan Principal / Chronomètre du Match</label>
+        <div class="input-group">
+          <label>Module Temps / Entête (Slogan)</label>
           <div class="toolbar" data-target="input-slogan-country">
-            <button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button>
-            <button type="button" class="btn-format" data-type="color"><i class="ri-font-color"></i></button>
+            <button type="button" class="btn-format" data-type="bold">B</button>
+            <button type="button" class="btn-format" data-type="color"><i class="ri-palette-line"></i></button>
           </div>
           <input type="text" id="input-slogan-country" placeholder='Ex: [startedat:"17/06/2026:22:00" max:"01:30:00"]'>
         </div>
 
         <div class="input-group">
-          <label>Durée finale affichée dans l'archive (ex: 90min, 2h15, etc.)</label>
-          <input type="text" id="input-archive-duration" placeholder="Ex: 90:00 ou 2h15">
+          <label>Durée réglementaire finale pour l'archive</label>
+          <input type="text" id="input-archive-duration" placeholder="Ex: 90:00, Fin Prol., 120:00">
         </div>
 
         <div class="admin-columns">
           <div class="admin-col">
-            <h3>Équipe Émettrice (Gauche)</h3>
+            <h3>Équipe Domicile (Gauche)</h3>
             <div class="input-group">
-              <label>Nom</label>
-              <div class="toolbar" data-target="input-name-1"><button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button></div>
+              <label>Nom de l'équipe</label>
+              <div class="toolbar" data-target="input-name-1"><button type="button" class="btn-format" data-type="bold">B</button></div>
               <input type="text" id="input-name-1">
             </div>
             <div class="input-group">
-              <label>Slogan de l'Équipe</label>
+              <label>Slogan / Détails</label>
               <input type="text" id="input-slogan-1">
             </div>
             <div class="input-group">
-              <label>URL Drapeau</label>
+              <label>Lien URL du Drapeau</label>
               <input type="url" id="input-flag-1">
             </div>
             <div class="input-group-row">
               <div class="input-group">
-                <label>Buts / Score</label>
+                <label>Buts</label>
                 <input type="number" id="input-score-1">
               </div>
               <div class="input-group">
-                <label>Couleur Thème</label>
+                <label>Néon</label>
                 <input type="color" id="input-color-1" value="#3b82f6">
               </div>
             </div>
           </div>
 
           <div class="admin-col">
-            <h3>Équipe Réceptrice (Droite)</h3>
+            <h3>Équipe Extérieur (Droite)</h3>
             <div class="input-group">
-              <label>Nom</label>
-              <div class="toolbar" data-target="input-name-2"><button type="button" class="btn-format" data-type="bold"><i class="ri-bold"></i></button></div>
+              <label>Nom de l'équipe</label>
+              <div class="toolbar" data-target="input-name-2"><button type="button" class="btn-format" data-type="bold">B</button></div>
               <input type="text" id="input-name-2">
             </div>
             <div class="input-group">
-              <label>Slogan de l'Équipe</label>
+              <label>Slogan / Détails</label>
               <input type="text" id="input-slogan-2">
             </div>
             <div class="input-group">
-              <label>URL Drapeau</label>
+              <label>Lien URL du Drapeau</label>
               <input type="url" id="input-flag-2">
             </div>
             <div class="input-group-row">
               <div class="input-group">
-                <label>Buts / Score</label>
+                <label>Buts</label>
                 <input type="number" id="input-score-2">
               </div>
               <div class="input-group">
-                <label>Couleur Thème</label>
+                <label>Néon</label>
                 <input type="color" id="input-color-2" value="#ef4444">
               </div>
             </div>
           </div>
         </div>
 
-        <div class="admin-help-box">
-          <h4><i class="ri-information-line"></i> Syntaxes de chronométrage :</h4>
-          <ul>
-            <li><strong>Compte à rebours :</strong> <code>[countdown:"45mi"]</code></li>
-            <li><strong>Chrono vers Date fixe :</strong> <code>[timer:"17/06/2026:22:00"]</code></li>
-            <li><strong>Match en direct avec limite :</strong> <code>[startedat:"17/06/2026:22:00" max:"01:30:00"]</code></li>
-          </ul>
-        </div>
-
-        <button id="save-admin-btn" class="btn-save">Enregistrer et Mettre à jour</button>
+        <button id="save-admin-btn" class="btn-save">Mettre à jour le Tableau</button>
       </div>
     </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  
   <script src="script.js"></script>
 </body>
 </html>
